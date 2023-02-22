@@ -1,6 +1,6 @@
-package com.robert.nganga.recipeapp.feature_recipe.domain.model
+package com.robert.nganga.recipeapp.feature_recipe.data.remote.dto
 
-data class MissedIngredient(
+data class MissedIngredientDto(
     val aisle: String,
     val amount: Double,
     val extendedName: String,

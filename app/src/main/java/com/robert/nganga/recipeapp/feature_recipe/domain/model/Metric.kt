@@ -1,4 +1,4 @@
-package com.robert.nganga.recipeapp.feature_recipe.data.remote.dto
+package com.robert.nganga.recipeapp.feature_recipe.domain.model
 
 data class Metric(
     val amount: Double,

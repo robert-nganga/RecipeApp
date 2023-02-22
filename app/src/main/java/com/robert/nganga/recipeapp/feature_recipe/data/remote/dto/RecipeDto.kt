@@ -1,5 +1,9 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.remote.dto
 
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.AnalyzedInstruction
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.ExtendedIngredient
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
+
 data class RecipeDto(
     val aggregateLikes: Int,
     val analyzedInstructions: List<AnalyzedInstruction>,
@@ -18,8 +22,9 @@ data class RecipeDto(
     val image: String,
     val imageType: String,
     val instructions: String,
-    val license: String,
     val lowFodmap: Boolean,
+    val occasions: List<String>,
+    val originalId: Any,
     val preparationMinutes: Int,
     val pricePerServing: Double,
     val readyInMinutes: Int,
@@ -35,4 +40,30 @@ data class RecipeDto(
     val veryHealthy: Boolean,
     val veryPopular: Boolean,
     val weightWatcherSmartPoints: Int
-)
+){
+    fun toRecipe():Recipe {
+        return Recipe(
+            aggregateLikes = aggregateLikes,
+            analyzedInstructions = analyzedInstructions,
+            cookingMinutes = cookingMinutes,
+            cuisines = cuisines,
+            dairyFree = dairyFree,
+            diets = diets,
+            dishTypes = dishTypes,
+            extendedIngredients = extendedIngredients,
+            glutenFree = glutenFree,
+            id = id,
+            image = image,
+            imageType = imageType,
+            instructions = instructions,
+            readyInMinutes = readyInMinutes,
+            servings = servings,
+            sourceName = sourceName,
+            sourceUrl = sourceUrl,
+            summary = summary,
+            title = title,
+            vegan = vegan,
+            vegetarian = vegetarian
+        )
+    }
+}

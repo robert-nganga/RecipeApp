@@ -1,8 +1,8 @@
 package com.robert.nganga.recipeapp.feature_recipe.domain.model
 
-data class Search(
+class Ingredient (
     val id: Int,
     val image: String,
-    val imageType: String,
-    val title: String
-)
+    val localizedName: String,
+    val name: String
+    )

@@ -1,11 +1,10 @@
-package com.robert.nganga.recipeapp.feature_recipe.domain.model
+package com.robert.nganga.recipeapp.feature_recipe.data.remote.dto
 
-data class UsedIngredient(
+data class UsedIngredientDto(
     val aisle: String,
     val amount: Double,
     val id: Int,
     val image: String,
-    val meta: List<Any>,
     val name: String,
     val original: String,
     val originalName: String,
