@@ -1,5 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.remote.dto
 
+import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.AnalyzedInstruction
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.ExtendedIngredient
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
@@ -41,8 +42,8 @@ data class RecipeDto(
     val veryPopular: Boolean,
     val weightWatcherSmartPoints: Int
 ){
-    fun toRecipe():Recipe {
-        return Recipe(
+    fun toRecipeEntity():RecipeEntity {
+        return RecipeEntity(
             aggregateLikes = aggregateLikes,
             analyzedInstructions = analyzedInstructions,
             cookingMinutes = cookingMinutes,
@@ -63,7 +64,9 @@ data class RecipeDto(
             summary = summary,
             title = title,
             vegan = vegan,
-            vegetarian = vegetarian
+            vegetarian = vegetarian,
+            tag = null,
+            timeStamp = null
         )
     }
 }
