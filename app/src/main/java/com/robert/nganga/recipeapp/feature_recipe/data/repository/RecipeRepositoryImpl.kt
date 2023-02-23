@@ -1,5 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.repository
 
+import androidx.room.withTransaction
 import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.feature_recipe.data.local.RecipeDatabase
 import com.robert.nganga.recipeapp.feature_recipe.data.remote.RecipeApi
@@ -16,8 +17,7 @@ class RecipeRepositoryImpl(
 
     private val recipeDao = database.recipeDao()
 
-
-    override fun getRecipesByTag(tag: String)= networkBoundResource(
+    override fun getRandomRecipes(tag: String)= networkBoundResource(
         query = {
             recipeDao.getRecipes(tag).map { recipes ->
                 recipes.map { recipe ->
@@ -25,20 +25,31 @@ class RecipeRepositoryImpl(
                 }
             }
         },
-        fetch = {
-            api.getRandomRecipes(tags = tag)
-        },
+        fetch = { api.getRandomRecipes(tags = tag) },
         saveFetchResult = { recipes ->
             val recipeList = recipes.recipes.map { recipe ->
-                recipe.toRecipeEntity().copy(timeStamp= Date().toString(), tag = tag)
+                recipe.toRecipeEntity().copy(tag = tag)
             }
-        },
-        shouldFetch = { recipes ->
-            recipes.isEmpty()
+
+            database.withTransaction {
+                recipeDao.deleteRecipes(tag)
+                recipeDao.insertRecipes(recipeList)
+            }
         }
     )
-    override fun getRecipeById(id: Int): Flow<Resource<Recipe>> {
-        TODO("Not yet implemented")
-    }
-
+    override fun getRecipeById(id: Int) = networkBoundResource(
+        query = {
+            recipeDao.getRecipe(id).map { recipe ->
+                recipe.toRecipe()
+            }
+        },
+        fetch = { api.getRecipe(id) },
+        saveFetchResult = { recipe ->
+            val recipeEntity = recipe.toRecipeEntity()
+            database.withTransaction {
+                recipeDao.deleteRecipe(id)
+                recipeDao.insertRecipe(recipeEntity)
+            }
+        }
+    )
 }

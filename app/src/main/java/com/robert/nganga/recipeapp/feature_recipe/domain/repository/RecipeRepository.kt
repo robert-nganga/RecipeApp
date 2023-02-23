@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeRepository {
 
 
-    fun getRecipesByTag(tag: String): Flow<Resource<List<Recipe>>>
+    fun getRandomRecipes(tag: String): Flow<Resource<List<Recipe>>>
 
     fun getRecipeById(id: Int): Flow<Resource<Recipe>>
 }
