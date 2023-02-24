@@ -22,4 +22,5 @@ data class Recipe(
     val title: String,
     val vegan: Boolean,
     val vegetarian: Boolean,
+    val timeStamp: String?
 )

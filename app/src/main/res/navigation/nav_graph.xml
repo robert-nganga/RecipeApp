@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.HomeFragment"
+        android:label="Recipes"
+        tools:layout="@layout/fragment_home"/>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite"/>
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.ExploreFragment"
+        android:label="Explore"
+        tools:layout="@layout/fragment_explore"/>
 </navigation>

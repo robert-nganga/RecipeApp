@@ -35,4 +35,9 @@ interface RecipeApi {
     ): List<RecipeByIngredientsDto>
 
 
+    companion object{
+        const val BASE_URL = "https://api.spoonacular.com/recipes/"
+    }
+
+
 }
