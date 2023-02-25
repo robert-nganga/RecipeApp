@@ -63,7 +63,7 @@
             app:srcCompat="@drawable/ic_baseline_access_time_24" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvRecipeTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

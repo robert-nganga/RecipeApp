@@ -1,21 +1,17 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Category
 import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.CategoryAdapter
+import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
-import dagger.hilt.android.AndroidEntryPoint
-
 
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -24,6 +20,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
 
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var recipeAdapter: RecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,19 +35,28 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         categoryAdapter = CategoryAdapter(initializeCategoryData())
+        recipeAdapter = RecipeAdapter()
         categoryAdapter.setOnItemClickListener { category ->
             viewModel.getTags(category.title)
         }
 
         setupCategoryRecyclerView()
+        setupRecipeRecyclerView()
 //        viewModel.getTags(categoryAdapter.getSelectedCategory().title)
 
         viewModel.recipes.observe(viewLifecycleOwner){ response ->
             response.data?.let { recipes ->
                 if(recipes.isNotEmpty()){
                     binding.textView2.text = recipes[0].title
+                    recipeAdapter.differ.submitList(recipes)
                 }
             }
+        }
+    }
+
+    private fun setupRecipeRecyclerView() {
+        binding.rvRecipe.apply {
+            adapter = recipeAdapter
         }
     }
 
