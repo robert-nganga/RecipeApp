@@ -20,7 +20,7 @@ data class RecipeEntity(
     val glutenFree: Boolean,
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val image: String,
+    val image: String?,
     val imageType: String,
     val instructions: String,
     val readyInMinutes: Int,

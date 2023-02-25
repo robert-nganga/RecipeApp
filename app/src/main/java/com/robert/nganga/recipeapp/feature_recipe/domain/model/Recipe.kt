@@ -11,7 +11,7 @@ data class Recipe(
     val extendedIngredients: List<ExtendedIngredient>,
     val glutenFree: Boolean,
     val id: Int,
-    val image: String,
+    val image: String?,
     val imageType: String,
     val instructions: String,
     val readyInMinutes: Int,

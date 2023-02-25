@@ -31,33 +31,28 @@ class RecipeRepositoryImpl@Inject constructor(
     }
 
     override fun getRandomRecipes(tag: String)= networkBoundResource(
-        query = {
-            recipeDao.getRecipes(tag).map { recipes ->
-                recipes.map { recipe ->
-                    recipe.toRecipe()
-                }
-            }
-        },
+        query = { recipeDao.getRecipes(tag).map { recipes -> recipes.map { recipe -> recipe.toRecipe() } } },
         fetch = { api.getRandomRecipes(tags = tag) },
         saveFetchResult = { recipes ->
             val recipeList = recipes.recipes.map { recipe ->
                 recipe.toRecipeEntity().copy(tag = tag, timeStamp = Date().time.toString())
             }
-
             database.withTransaction {
                 recipeDao.deleteRecipes(tag)
                 recipeDao.insertRecipes(recipeList)
             }
         },
         shouldFetch = { recipes ->
-            recipes.isEmpty() || recipes.any { isDataStale(it) }
+            if (recipes.isEmpty()){
+                true
+            }else{
+                isDataStale(recipes[0])
+            }
         }
     )
     override fun getRecipeById(id: Int) = networkBoundResource(
-        query = {
-            recipeDao.getRecipe(id).map { recipe ->
-                recipe.toRecipe()
-            }
+        query = { recipeDao.getRecipe(id).map { recipe ->
+                recipe.toRecipe() }
         },
         fetch = { api.getRecipe(id) },
         saveFetchResult = { recipe ->
