@@ -2,15 +2,19 @@ package com.robert.nganga.recipeapp.feature_recipe.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.ActivityMainBinding
+import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    val viewModel: RecipeViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 

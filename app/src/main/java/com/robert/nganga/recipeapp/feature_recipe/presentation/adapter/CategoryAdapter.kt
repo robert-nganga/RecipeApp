@@ -49,9 +49,9 @@ class CategoryAdapter(private val categories: List<Category>):
 
                 // Change the background color of the selected category
                 if (selectedPosition == adapterPosition) {
-                    cardCategory.setCardBackgroundColor(AppCompatResources.getColorStateList(root.context, android.R.color.holo_green_light))
+                    cardCategory.setCardBackgroundColor(AppCompatResources.getColorStateList(root.context, R.color.green_200))
                 }else{
-                    cardCategory.setCardBackgroundColor(AppCompatResources.getColorStateList(root.context, R.color.grey_100))
+                    cardCategory.setCardBackgroundColor(AppCompatResources.getColorStateList(root.context, R.color.green_100))
                 }
 
                 itemView.setOnClickListener {

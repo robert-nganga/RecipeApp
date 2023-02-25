@@ -13,12 +13,13 @@ import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Category
 import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.CategoryAdapter
+import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
+
 class HomeFragment: Fragment(R.layout.fragment_home) {
-    private val viewModel: RecipeViewModel by viewModels()
+    private lateinit var viewModel: RecipeViewModel
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -35,6 +36,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
         categoryAdapter = CategoryAdapter(initializeCategoryData())
         categoryAdapter.setOnItemClickListener { category ->
             viewModel.getTags(category.title)
