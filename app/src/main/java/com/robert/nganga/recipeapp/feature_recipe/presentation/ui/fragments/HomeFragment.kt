@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
-import com.robert.nganga.recipeapp.feature_recipe.domain.model.Category
 import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
-import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.CategoryAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 
@@ -19,7 +18,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var recipeAdapter: RecipeAdapter
 
     override fun onCreateView(
@@ -34,15 +32,15 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
-        categoryAdapter = CategoryAdapter(initializeCategoryData())
         recipeAdapter = RecipeAdapter()
-        categoryAdapter.setOnItemClickListener { category ->
-            viewModel.getTags(category.title)
-        }
-
-        setupCategoryRecyclerView()
         setupRecipeRecyclerView()
-//        viewModel.getTags(categoryAdapter.getSelectedCategory().title)
+
+        // setup chip group listener
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            val text = chip.text.toString()
+            viewModel.getTags(text)
+        }
 
         viewModel.recipes.observe(viewLifecycleOwner){ response ->
             response.data?.let { recipes ->
@@ -60,21 +58,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun setupCategoryRecyclerView() {
-        binding.rvCategory.apply {
-            adapter = categoryAdapter
-        }
-    }
-
-    private fun initializeCategoryData(): List<Category> {
-        val categories = arrayListOf<Category>()
-        categories.add(Category(title ="bbq", image = R.drawable.bbq))
-        categories.add(Category(title ="vegan", image = R.drawable.veg))
-        categories.add(Category(title ="dessert", image = R.drawable.dessert))
-        categories.add(Category(title ="sea Food", image = R.drawable.sea_food))
-        categories.add(Category(title ="chicken", image = R.drawable.chicken))
-        return categories
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
