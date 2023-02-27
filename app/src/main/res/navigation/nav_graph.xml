@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.HomeFragment"
         android:label="Recipes"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.FavoritesFragment"
@@ -20,4 +24,12 @@
         android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.ExploreFragment"
         android:label="Explore"
         tools:layout="@layout/fragment_explore"/>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.RecipeFragment"
+        android:label="RecipeFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>
