@@ -21,7 +21,7 @@ data class RecipeEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val image: String?,
-    val imageType: String,
+    val imageType: String?,
     val instructions: String,
     val readyInMinutes: Int,
     val servings: Int,

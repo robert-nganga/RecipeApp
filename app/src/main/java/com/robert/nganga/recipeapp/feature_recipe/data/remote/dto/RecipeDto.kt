@@ -21,7 +21,7 @@ data class RecipeDto(
     val healthScore: Int,
     val id: Int,
     val image: String?,
-    val imageType: String,
+    val imageType: String?,
     val instructions: String,
     val lowFodmap: Boolean,
     val occasions: List<String>,
