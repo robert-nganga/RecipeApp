@@ -24,6 +24,12 @@ class RecipeAdapter: RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     val differ = AsyncListDiffer(this, diffCallback)
 
+    private var onItemClickListener: ((Recipe)->Unit)? = null
+
+    fun setOnItemClickListener(listener: (Recipe)-> Unit){
+        onItemClickListener = listener
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val binding = RecipeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,6 +38,9 @@ class RecipeAdapter: RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = differ.currentList[position]
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { it(recipe) }
+        }
         holder.bind(recipe)
     }
 

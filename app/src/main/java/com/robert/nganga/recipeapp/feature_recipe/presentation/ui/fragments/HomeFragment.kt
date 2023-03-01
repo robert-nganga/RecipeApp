@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
@@ -35,6 +36,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         viewModel = (activity as MainActivity).viewModel
         recipeAdapter = RecipeAdapter()
         setupRecipeRecyclerView()
+
+        recipeAdapter.setOnItemClickListener { recipe->
+            val bundle = Bundle().apply {
+                putInt("id", recipe.id)
+            }
+            findNavController().navigate(R.id.action_homeFragment_to_recipeFragment, bundle)
+        }
 
         binding.chipAll.isChecked = true
         val text = binding.chipGroup.findViewById<Chip>(binding.chipGroup.checkedChipId).text.toString()

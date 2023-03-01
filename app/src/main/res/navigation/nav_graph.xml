@@ -30,6 +30,6 @@
         android:label="RecipeFragment" >
         <argument
             android:name="id"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 </navigation>
