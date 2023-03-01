@@ -35,15 +35,15 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         viewModel.getIds(args.id)
 
         val screens = listOf(
-            "Summary",
             "Ingredients",
-            "Preparation"
+            "Preparation",
+            "Summary"
         )
 
         val viewPager2 = binding.viewPager
         val tabLayout = binding.tabLayout
 
-        val pagerAdapter = PagerAdapter(parentFragmentManager, lifecycle)
+        val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         viewPager2.adapter = pagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->

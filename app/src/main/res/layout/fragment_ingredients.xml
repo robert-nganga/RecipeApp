@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="ExtraText">
 
     <TextView
         android:id="@+id/tvRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="app:layout_behavior: The class name of a Behavior class defining special runtime behavior for this child view. AppBarLayout and FAB button have default behavior attached to them. This is most important attributes of CoordinatorLayout . I have talked about this in another blog post. In some tutorial on the internet you may see that CoordinatorLayout has android:fitsSystemWindows attribute. You may wonder why should we use this attribute. You can find you answer here and here. That’s all for the basic. I have planned to post series on Material Component. So follow me if you don’t wanna miss my future post. If this post is helpful, please clap for me.CoordinatorLayout is a general-purpose container that allows for coordinating interactive behaviorsbetween its children.CoordinatorLayout manages interactions between its children, and as such needs to contain all the Views that interact with each other. The two general cases supported by CoordinatorLayout are: As a top-level content layout (meaning CoordinatorLayout is at the root of all views within an activity or fragment). As a container for a specific interaction with one or more child views. By specifying Behaviors for child views of a CoordinatorLayout you can provide many different interactions within a single parent and those views can also interact with one another. Important XML Attributes android:layout_gravity: Specifies the gravity of the child relative to the parent. If you specify an Anchor using app:layout_anchor, then this attribute would be ignored. And you have to use app:layout_anchorGravity to position the child. Do not use both of these together in any view. It may cause of unexpected result."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

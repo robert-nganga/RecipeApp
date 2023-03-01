@@ -124,24 +124,6 @@
         app:layout_anchorGravity="bottom"
         app:tabIndicatorHeight="3dp"
         app:tabMode="fixed">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabIngredients"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingredients" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabSteps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Steps" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabNutrition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nutrition" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
