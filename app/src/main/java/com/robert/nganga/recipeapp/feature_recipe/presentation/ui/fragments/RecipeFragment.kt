@@ -52,6 +52,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
 
         viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
             recipe.data?.let {
+                pagerAdapter.setRecipe(it)
                 val time = "${it.readyInMinutes} mins"
                 binding.apply {
                     tvRecipeTitle.text = it.title
