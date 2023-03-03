@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentIngredientsBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
@@ -30,21 +31,18 @@ class IngredientsFragment: Fragment(R.layout.fragment_ingredients){
         super.onViewCreated(view, savedInstanceState)
         val recipe = arguments?.getSerializable("recipe") as Recipe
 
-        ingredientsAdapter = IngredientsAdapter()
-        binding.rvIngredients.adapter = ingredientsAdapter
-        Log.i("IngredientsFragment", "onViewCreated: ${recipe.title}")
-        ingredientsAdapter.differ.submitList(recipe.extendedIngredients)
-        //setupIngredientsRecyclerView(recipe)
-
-
-
+//        ingredientsAdapter = IngredientsAdapter()
+//        binding.rvIngredients.adapter = ingredientsAdapter
+//        ingredientsAdapter.differ.submitList(recipe.extendedIngredients)
+        setupIngredientsRecyclerView(recipe)
     }
 
     private fun setupIngredientsRecyclerView(recipe: Recipe) {
-        Log.i("IngredientsFragment", "setupIngredientsRecyclerView: ${recipe.extendedIngredients}")
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         ingredientsAdapter = IngredientsAdapter()
         binding.rvIngredients.apply {
             adapter = ingredientsAdapter
+            addItemDecoration(decoration)
             setHasFixedSize(true)
         }
         ingredientsAdapter.differ.submitList(recipe.extendedIngredients)
