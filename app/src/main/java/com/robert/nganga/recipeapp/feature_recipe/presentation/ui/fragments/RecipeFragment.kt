@@ -59,10 +59,11 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
 
     private fun FragmentRecipeBinding.bindRecipeData(recipe: Recipe){
         val time = "${recipe.readyInMinutes} mins"
+        val servings = "${recipe.servings} servings"
         this.apply {
             tvRecipeTitle.text = recipe.title
             tvRecipeTime.text = time
-            tvServing.text = recipe.servings.toString()
+            tvServing.text = servings
             Glide.with(requireContext()).load(recipe.image).into(imgToolBar)
         }
     }
@@ -74,17 +75,6 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             tab.text = screens[position]
         }.attach()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        // clear the data in the views
-        binding.apply {
-            tvRecipeTitle.text = ""
-            tvRecipeTime.text = ""
-            tvServing.text = ""
-            imgToolBar.setImageResource(0)
-        }
     }
 
     override fun onDestroyView() {
