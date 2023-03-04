@@ -9,5 +9,5 @@ interface RecipeRepository {
 
     fun getRandomRecipes(tag: String): Flow<Resource<List<Recipe>>>
 
-    fun getRecipeById(id: Int): Flow<Resource<Recipe>>
+    fun getRecipeById(id: Int): Flow<Resource<Recipe?>>
 }

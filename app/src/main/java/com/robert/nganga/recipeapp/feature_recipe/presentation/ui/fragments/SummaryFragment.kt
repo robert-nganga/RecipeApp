@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentSummaryBinding
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 
 class SummaryFragment: Fragment(R.layout.fragment_summary) {
 
@@ -20,6 +21,16 @@ class SummaryFragment: Fragment(R.layout.fragment_summary) {
     ): View {
         _binding = FragmentSummaryBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recipe = arguments?.getSerializable("recipe") as Recipe
+
+
+        val regex = Regex("<.*?>")
+        val summary = regex.replace(recipe.summary, "")
+        binding.tvRecipeSummary.text = summary
     }
 
     override fun onDestroyView() {

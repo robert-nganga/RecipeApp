@@ -51,8 +51,13 @@ class RecipeRepositoryImpl@Inject constructor(
         }
     )
     override fun getRecipeById(id: Int) = networkBoundResource(
-        query = { recipeDao.getRecipe(id).map { recipe ->
-                recipe.toRecipe() }
+        query = { recipeDao.getRecipe(id).map {recipes ->
+                if (recipes.isEmpty()) {
+                    null
+                }else{
+                    recipes[0].toRecipe()
+                }
+            }
         },
         fetch = { api.getRecipe(id) },
         saveFetchResult = { recipe ->
@@ -63,7 +68,11 @@ class RecipeRepositoryImpl@Inject constructor(
             }
         },
         shouldFetch = { recipe ->
-            isDataStale(recipe)
+            if (recipe == null){
+                true
+            }else{
+                isDataStale(recipe)
+            }
         }
     )
 }
