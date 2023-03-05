@@ -2,6 +2,7 @@ package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import android.view.LayoutInflater
@@ -34,6 +35,8 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         "Summary"
     )
 
+    private var recipe: Recipe? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,17 +54,24 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         viewPager2 = binding.viewPager
         tabLayout = binding.tabLayout
 
+        binding.extendedFab.setOnClickListener {
+            recipe?.sourceUrl?.let { recipeUrl ->
+                openWebPage(recipeUrl)
+            }
+        }
+
         viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
             recipe.data?.let {
                 setupViewPager(it)
                 binding.bindRecipeData(it)
+                this.recipe = it
             }
         }
 
         binding.imgShareRecipe.setOnClickListener {
-            viewModel.recipe.value?.data?.sourceUrl?.let { url->
+            recipe?.sourceUrl?.let { recipeUrl ->
                 val context = requireContext()
-                context.shareRecipe(url)
+                context.shareRecipe(recipeUrl)
             }
         }
     }
@@ -75,10 +85,20 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         startActivity(shareIntent)
     }
 
+    private fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        val packageManager = requireActivity().packageManager
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
     private fun FragmentRecipeBinding.bindRecipeData(recipe: Recipe){
         val time = "${recipe.readyInMinutes} mins"
         val servings = "${recipe.servings} servings"
         this.apply {
+            extendedFab.text = recipe.sourceName
             tvRecipeTitle.text = recipe.title
             tvRecipeTime.text = time
             tvServing.text = servings
