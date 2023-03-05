@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.robert.nganga.recipeapp.BuildConfig
 import com.robert.nganga.recipeapp.R
+import com.robert.nganga.recipeapp.core.util.Constants.BASE_RECIPE_WIDGET_URL
 import com.robert.nganga.recipeapp.databinding.FragmentSummaryBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 
@@ -31,6 +34,11 @@ class SummaryFragment: Fragment(R.layout.fragment_summary) {
         val regex = Regex("<.*?>")
         val summary = regex.replace(recipe.summary, "")
         binding.tvRecipeSummary.text = summary
+
+        val imageUrl = "$BASE_RECIPE_WIDGET_URL${recipe.id}/nutritionWidget.png?apiKey=${BuildConfig.API_KEY}"
+        Glide.with(requireContext())
+            .load(imageUrl)
+            .into(binding.imgSummary)
     }
 
     override fun onDestroyView() {
