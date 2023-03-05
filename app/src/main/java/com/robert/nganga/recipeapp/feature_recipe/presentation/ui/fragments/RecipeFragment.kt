@@ -76,6 +76,8 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         }
     }
 
+
+
     private fun Context.shareRecipe(recipeUrl: String){
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"

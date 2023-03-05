@@ -45,14 +45,13 @@
             android:id="@+id/chipGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             app:singleLine="true"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipAll"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_marginTop="16dp"
@@ -63,6 +62,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipDessert"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_marginTop="16dp"
@@ -74,6 +74,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipChicken"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:checkable="true"
@@ -83,6 +84,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipVegan"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_marginTop="16dp"
@@ -94,6 +96,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipGlutenFree"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_marginTop="16dp"
@@ -105,6 +108,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipDairyFree"
+                style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_marginTop="16dp"
