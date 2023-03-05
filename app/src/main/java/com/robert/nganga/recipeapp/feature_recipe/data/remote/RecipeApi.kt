@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface RecipeApi {
     @GET("random")
     suspend fun getRandomRecipes(
-        @Query("number") number: Int = 10,
+        @Query("number") number: Int = 20,
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
         @Query("tags") tags: String = "bbq"
     ): RecipeResponseDto

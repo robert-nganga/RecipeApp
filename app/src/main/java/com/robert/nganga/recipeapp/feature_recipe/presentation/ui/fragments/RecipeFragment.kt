@@ -1,5 +1,7 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import android.view.LayoutInflater
@@ -26,7 +28,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
 
-    val screens = listOf(
+    private val screens = listOf(
         "Ingredients",
         "Preparation",
         "Summary"
@@ -55,6 +57,22 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
                 binding.bindRecipeData(it)
             }
         }
+
+        binding.imgShareRecipe.setOnClickListener {
+            viewModel.recipe.value?.data?.sourceUrl?.let { url->
+                val context = requireContext()
+                context.shareRecipe(url)
+            }
+        }
+    }
+
+    private fun Context.shareRecipe(recipeUrl: String){
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, recipeUrl)
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun FragmentRecipeBinding.bindRecipeData(recipe: Recipe){

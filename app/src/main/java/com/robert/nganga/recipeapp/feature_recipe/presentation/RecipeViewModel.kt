@@ -1,9 +1,7 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.switchMap
+import android.util.Log
+import androidx.lifecycle.*
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRandomRecipes
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRecipeById
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,9 +12,11 @@ import javax.inject.Inject
 class RecipeViewModel@Inject constructor(
     private val getRandomRecipes: GetRandomRecipes,
     private val getRecipeById: GetRecipeById,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var _tag = MutableLiveData<String>()
+    private var _tag = savedStateHandle.getLiveData(CURRENT_TAG, DEFAULT_TAG)
+
     private var _id = MutableLiveData<Int>()
 
     val recipes = _tag.switchMap { tag ->
@@ -28,14 +28,21 @@ class RecipeViewModel@Inject constructor(
     }
 
 
-    private var myTag = ""
     fun getTags(tag:String){
-        if (myTag == tag) return
-        myTag = tag
-        _tag.value = tag
+        val currentTag = if (tag == "all") DEFAULT_TAG else tag
+        if (currentTag != _tag.value){
+            _tag.value = tag
+            Log.i("RecipeViewModel", "Fetched data with tag: $tag")
+        }
+
     }
 
     fun getIds(id:Int){
         _id.value = id
+    }
+
+    companion object{
+        const val CURRENT_TAG = "current_tag"
+        const val DEFAULT_TAG = ""
     }
 }

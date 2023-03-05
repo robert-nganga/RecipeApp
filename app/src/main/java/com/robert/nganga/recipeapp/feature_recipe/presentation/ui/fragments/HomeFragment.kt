@@ -45,8 +45,8 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
         binding.chipAll.isChecked = true
-        val text = binding.chipGroup.findViewById<Chip>(binding.chipGroup.checkedChipId).text.toString()
-        viewModel.getTags(text)
+//        val text = binding.chipGroup.findViewById<Chip>(binding.chipGroup.checkedChipId).text.toString()
+//        viewModel.getTags(text)
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if(checkedIds.isNotEmpty()){
                 val chip = group.findViewById<Chip>(checkedIds.first())
