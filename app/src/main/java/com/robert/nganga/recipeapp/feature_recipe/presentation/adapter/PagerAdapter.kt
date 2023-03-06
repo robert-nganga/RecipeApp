@@ -13,7 +13,6 @@ import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.Summ
 private const val NUM_TABS = 3
 
 class PagerAdapter(
-    private val recipe: Recipe,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
 
@@ -22,25 +21,11 @@ class PagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        val bundle = Bundle().apply {
-            putSerializable("recipe", recipe)
-        }
+
         return when(position){
-            0 -> {
-                val ingredientsFragment = IngredientsFragment()
-                ingredientsFragment.arguments = bundle
-                ingredientsFragment
-            }
-            1 -> {
-                val preparationFragment = PreparationFragment()
-                preparationFragment.arguments = bundle
-                preparationFragment
-            }
-            else -> {
-                val summaryFragment = SummaryFragment()
-                summaryFragment.arguments = bundle
-                summaryFragment
-            }
+            0 -> { IngredientsFragment() }
+            1 -> { PreparationFragment() }
+            else -> { SummaryFragment() }
         }
     }
 }

@@ -54,6 +54,8 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         viewPager2 = binding.viewPager
         tabLayout = binding.tabLayout
 
+        setupViewPager()
+
         binding.extendedFab.setOnClickListener {
             recipe?.sourceUrl?.let { recipeUrl ->
                 openWebPage(recipeUrl)
@@ -62,7 +64,6 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
 
         viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
             recipe.data?.let {
-                setupViewPager(it)
                 binding.bindRecipeData(it)
                 this.recipe = it
             }
@@ -108,8 +109,8 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         }
     }
 
-    private fun setupViewPager(recipe: Recipe){
-        val pagerAdapter = PagerAdapter(recipe, childFragmentManager, lifecycle)
+    private fun setupViewPager(){
+        val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
         viewPager2.adapter = pagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->

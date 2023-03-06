@@ -8,9 +8,13 @@ import androidx.fragment.app.Fragment
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentPreparationBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
+import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PreparationAdapter
+import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 
 class PreparationFragment: Fragment(R.layout.fragment_preparation) {
+    private lateinit var viewModel: RecipeViewModel
+
     private var _binding: FragmentPreparationBinding? = null
     private val binding get() = _binding!!
 
@@ -27,15 +31,20 @@ class PreparationFragment: Fragment(R.layout.fragment_preparation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
 
-        val recipe = arguments?.getSerializable("recipe") as Recipe
+        viewModel.recipe.observe(viewLifecycleOwner){ response ->
+            response.data?.let { recipe ->
+                if (recipe.analyzedInstructions.isNotEmpty()) {
+                    preparationAdapter.differ.submitList(recipe.analyzedInstructions[0].steps)
+                }
+            }
+        }
         preparationAdapter = PreparationAdapter()
         binding.rvPreparation.apply {
             adapter = preparationAdapter
         }
-        if (recipe.analyzedInstructions.isNotEmpty()) {
-            preparationAdapter.differ.submitList(recipe.analyzedInstructions[0].steps)
-        }
+
     }
 
     override fun onDestroyView() {
