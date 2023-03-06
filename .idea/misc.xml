@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/rober/Documents/kotlin/RecipeApp/app/src/main/res/drawable/chip_background_color.xml" value="0.118" />
+        <entry key="..\:/Users/rober/Documents/kotlin/RecipeApp/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.118" />
         <entry key="..\:/Users/rober/Documents/kotlin/RecipeApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/rober/Documents/kotlin/RecipeApp/app/src/main/res/layout/category_item.xml" value="0.25" />
         <entry key="..\:/Users/rober/Documents/kotlin/RecipeApp/app/src/main/res/layout/favorite_list_item.xml" value="0.20416666666666666" />
