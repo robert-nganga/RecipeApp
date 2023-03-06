@@ -1,6 +1,5 @@
 package com.robert.nganga.recipeapp.feature_recipe.domain.model
 
-import java.io.Serializable
 
 
 data class Recipe(
@@ -26,4 +25,4 @@ data class Recipe(
     val vegan: Boolean,
     val vegetarian: Boolean,
     val timeStamp: String?
-): Serializable
+)
