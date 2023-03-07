@@ -10,8 +10,7 @@ import com.robert.nganga.recipeapp.BuildConfig
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.core.util.Constants.BASE_RECIPE_WIDGET_URL
 import com.robert.nganga.recipeapp.databinding.FragmentSummaryBinding
-import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
-import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 
 class SummaryFragment: Fragment(R.layout.fragment_summary) {

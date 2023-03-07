@@ -1,4 +1,4 @@
-package com.robert.nganga.recipeapp.feature_recipe.presentation
+package com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*

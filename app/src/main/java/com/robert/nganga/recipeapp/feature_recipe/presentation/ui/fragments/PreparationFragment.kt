@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentPreparationBinding
-import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
-import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PreparationAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 

@@ -1,7 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentIngredientsBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
-import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.IngredientsAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 

@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
-import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 

@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.ActivityMainBinding
-import com.robert.nganga.recipeapp.feature_recipe.presentation.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
