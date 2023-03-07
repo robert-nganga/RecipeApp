@@ -4,11 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -20,7 +24,7 @@ import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeV
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PagerAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 
-class RecipeFragment: Fragment(R.layout.fragment_recipe){
+class RecipeFragment: Fragment(R.layout.fragment_recipe), MenuItem.OnMenuItemClickListener{
     private lateinit var viewModel: RecipeViewModel
     private var _binding : FragmentRecipeBinding? = null
     private val binding get() = _binding!!
@@ -50,11 +54,12 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         viewModel.getIds(args.id)
-
         viewPager2 = binding.viewPager
         tabLayout = binding.tabLayout
-
         setupViewPager()
+
+//        val menuHost: MenuHost = requireActivity()
+//        menuHost.addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.extendedFab.setOnClickListener {
             recipe?.sourceUrl?.let { recipeUrl ->
@@ -77,6 +82,51 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         }
     }
 
+//    private val menuProvider = object: MenuProvider {
+//        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//            menuInflater.inflate(R.menu.top_app_bar, menu)
+//
+//        }
+//
+//        override fun onPrepareMenu(menu: Menu) {
+//            super.onPrepareMenu(menu)
+//            val favoriteIcon = menu.findItem(R.id.favoriteIcon)
+//            if (recipe?.isFavorite == true){
+//                favoriteIcon.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_24, null)
+//            } else {
+//                favoriteIcon.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_border_white_24, null)
+//            }
+//        }
+//
+//        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//            return when(menuItem.itemId){
+//                R.id.favoriteIcon-> {
+//                    Log.i("RecipeFragment", "Favorite icon clicked")
+//                    Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar, menu)
+        menu.findItem(R.id.favoriteIcon).setOnMenuItemClickListener(this)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+                R.id.favoriteIcon-> {
+                    Log.i("RecipeFragment", "Favorite icon clicked")
+                    Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+        }
+
+    }
 
 
     private fun Context.shareRecipe(recipeUrl: String){
@@ -98,6 +148,8 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     }
 
     private fun FragmentRecipeBinding.bindRecipeData(recipe: Recipe){
+        val icFavoriteFilledImage = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_24, null)
+        val icFavoriteBorderImage = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_border_white_24, null)
         val time = "${recipe.readyInMinutes} mins"
         val servings = "${recipe.servings} servings"
         this.apply {
@@ -108,6 +160,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
             Glide.with(requireContext()).load(recipe.image).into(imgToolBar)
         }
     }
+
 
     private fun setupViewPager(){
         val pagerAdapter = PagerAdapter(childFragmentManager, lifecycle)
@@ -122,4 +175,17 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onMenuItemClick(p0: MenuItem): Boolean {
+        Log.i("RecipeFragment", "Favorite icon clicked")
+        return when(p0.itemId){
+            R.id.favoriteIcon-> {
+                Log.i("RecipeFragment", "Favorite icon clicked")
+                Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> false
+        }
+    }
+
 }

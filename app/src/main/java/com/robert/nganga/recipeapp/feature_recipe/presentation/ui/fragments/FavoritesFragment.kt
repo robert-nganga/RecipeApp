@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentFavoriteBinding
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
+
+    private val viewModel: FavoriteViewModel by viewModels()
 
     private var _binding : FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
