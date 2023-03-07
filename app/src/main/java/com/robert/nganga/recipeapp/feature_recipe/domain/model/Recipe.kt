@@ -25,4 +25,26 @@ data class Recipe(
     val vegan: Boolean,
     val vegetarian: Boolean,
     val timeStamp: String?
-)
+){
+    fun toFavorite() = Favorite(
+        aggregateLikes = aggregateLikes,
+        cookingMinutes = cookingMinutes,
+        cuisines = cuisines,
+        dairyFree = dairyFree,
+        diets = diets,
+        dishTypes = dishTypes,
+        glutenFree = glutenFree,
+        id = id,
+        image = image,
+        imageType = imageType,
+        instructions = instructions,
+        readyInMinutes = readyInMinutes,
+        servings = servings,
+        sourceName = sourceName,
+        sourceUrl = sourceUrl,
+        summary = summary,
+        title = title,
+        analyzedInstructions = analyzedInstructions,
+        extendedIngredients = extendedIngredients,
+    )
+}

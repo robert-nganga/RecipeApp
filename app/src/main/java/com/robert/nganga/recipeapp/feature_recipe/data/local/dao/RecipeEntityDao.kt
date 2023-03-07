@@ -1,4 +1,4 @@
-package com.robert.nganga.recipeapp.feature_recipe.data.local
+package com.robert.nganga.recipeapp.feature_recipe.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

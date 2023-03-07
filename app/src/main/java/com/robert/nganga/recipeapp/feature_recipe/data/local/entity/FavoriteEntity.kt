@@ -1,9 +1,13 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.AnalyzedInstruction
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.ExtendedIngredient
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Favorite
 
+
+@Entity(tableName = "favorite_table")
 data class FavoriteEntity(
     val aggregateLikes: Int,
     val analyzedInstructions: List<AnalyzedInstruction>,
@@ -14,6 +18,7 @@ data class FavoriteEntity(
     val dishTypes: List<String>,
     val extendedIngredients: List<ExtendedIngredient>,
     val glutenFree: Boolean,
+    @PrimaryKey(autoGenerate = false)
     val id: Int,
     val image: String?,
     val imageType: String?,
