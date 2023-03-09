@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.navigation.fragment.navArgs
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -21,10 +17,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentRecipeBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
-import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PagerAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -96,20 +92,6 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
                 context.shareRecipe(recipeUrl)
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_app_bar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.favoriteIcon -> {
-                Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun Context.shareRecipe(recipeUrl: String){
