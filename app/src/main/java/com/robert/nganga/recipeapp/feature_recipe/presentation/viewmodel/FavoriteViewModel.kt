@@ -1,8 +1,12 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.Favorite
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -15,4 +19,10 @@ class FavoriteViewModel@Inject constructor(
     private val getAllFavorites: GetAllFavorites): ViewModel() {
 
     val favorite: String = "Favorite"
+
+    val favorites = getAllFavorites().asLiveData()
+
+    fun insertFavoriteRecipe(favorite: Favorite) = viewModelScope.launch {
+        insertFavorite(favorite)
+    }
 }

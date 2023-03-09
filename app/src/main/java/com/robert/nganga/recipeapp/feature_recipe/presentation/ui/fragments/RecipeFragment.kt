@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -23,8 +24,13 @@ import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PagerAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class RecipeFragment: Fragment(R.layout.fragment_recipe), MenuItem.OnMenuItemClickListener{
+@AndroidEntryPoint
+class RecipeFragment: Fragment(R.layout.fragment_recipe){
+
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
     private lateinit var viewModel: RecipeViewModel
     private var _binding : FragmentRecipeBinding? = null
     private val binding get() = _binding!!
@@ -58,8 +64,18 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe), MenuItem.OnMenuItemCli
         tabLayout = binding.tabLayout
         setupViewPager()
 
-//        val menuHost: MenuHost = requireActivity()
-//        menuHost.addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        binding.toolbar.inflateMenu(R.menu.top_app_bar)
+        binding.toolbar.setOnMenuItemClickListener { it ->
+            when(it.itemId){
+                R.id.favoriteIcon -> {
+                    recipe?.let { recipe->
+                        favoriteViewModel.insertFavoriteRecipe(recipe.toFavorite())
+                    }
+                    Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
 
         binding.extendedFab.setOnClickListener {
             recipe?.sourceUrl?.let { recipeUrl ->
@@ -82,52 +98,19 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe), MenuItem.OnMenuItemCli
         }
     }
 
-//    private val menuProvider = object: MenuProvider {
-//        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//            menuInflater.inflate(R.menu.top_app_bar, menu)
-//
-//        }
-//
-//        override fun onPrepareMenu(menu: Menu) {
-//            super.onPrepareMenu(menu)
-//            val favoriteIcon = menu.findItem(R.id.favoriteIcon)
-//            if (recipe?.isFavorite == true){
-//                favoriteIcon.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_24, null)
-//            } else {
-//                favoriteIcon.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_favorite_border_white_24, null)
-//            }
-//        }
-//
-//        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//            return when(menuItem.itemId){
-//                R.id.favoriteIcon-> {
-//                    Log.i("RecipeFragment", "Favorite icon clicked")
-//                    Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_app_bar, menu)
-        menu.findItem(R.id.favoriteIcon).setOnMenuItemClickListener(this)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-                R.id.favoriteIcon-> {
-                    Log.i("RecipeFragment", "Favorite icon clicked")
-                    Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else -> false
+        when(item.itemId){
+            R.id.favoriteIcon -> {
+                Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
+            }
         }
-
+        return super.onOptionsItemSelected(item)
     }
-
 
     private fun Context.shareRecipe(recipeUrl: String){
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
@@ -176,16 +159,5 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe), MenuItem.OnMenuItemCli
         _binding = null
     }
 
-    override fun onMenuItemClick(p0: MenuItem): Boolean {
-        Log.i("RecipeFragment", "Favorite icon clicked")
-        return when(p0.itemId){
-            R.id.favoriteIcon-> {
-                Log.i("RecipeFragment", "Favorite icon clicked")
-                Toast.makeText(requireContext(), "Favorite icon clicked", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> false
-        }
-    }
 
 }
