@@ -2,4 +2,7 @@
     <string name="app_name">Recipe App</string>
     <string name="favorite">favorite</string>
     <string name="fab_text">Foodista</string>
+    <string name="ok">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="message">Delete all favorites</string>
 </resources>

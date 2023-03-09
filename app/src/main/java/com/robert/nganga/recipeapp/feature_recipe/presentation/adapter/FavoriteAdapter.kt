@@ -11,7 +11,7 @@ import com.robert.nganga.recipeapp.feature_recipe.domain.model.Favorite
 
 class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val binding = FavoriteListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

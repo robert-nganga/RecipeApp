@@ -25,4 +25,12 @@ class FavoriteViewModel@Inject constructor(
     fun insertFavoriteRecipe(favorite: Favorite) = viewModelScope.launch {
         insertFavorite(favorite)
     }
+
+    fun deleteFavoriteRecipe(favorite: Favorite) = viewModelScope.launch {
+        deleteFavorite(favorite)
+    }
+
+    fun deleteAllFavoriteRecipes() = viewModelScope.launch {
+        deleteAllFavorites()
+    }
 }
