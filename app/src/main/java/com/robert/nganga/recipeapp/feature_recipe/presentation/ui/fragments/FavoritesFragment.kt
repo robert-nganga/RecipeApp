@@ -68,7 +68,7 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
             Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo"){
                     viewModel.insertFavoriteRecipe(favorite)
-                }
+                }.setAnchorView(binding.floatingActionButton)
                 .show()
         }
     })

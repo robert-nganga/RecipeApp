@@ -16,7 +16,7 @@
             android:id="@+id/imgFavorite"
             android:layout_width="100dp"
             android:layout_height="110dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
