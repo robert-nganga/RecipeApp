@@ -67,7 +67,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
                     recipe?.let { recipe->
                         favoriteViewModel.insertFavoriteRecipe(recipe.toFavorite())
                     }
-                    Toast.makeText(requireContext(), "Recipe saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Recipe added to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
             true

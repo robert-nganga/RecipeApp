@@ -10,4 +10,6 @@ interface RecipeRepository {
     fun getRandomRecipes(tag: String): Flow<Resource<List<Recipe>>>
 
     fun getRecipeById(id: Int): Flow<Resource<Recipe?>>
+
+    suspend fun updateRecipe(recipe: Recipe)
 }

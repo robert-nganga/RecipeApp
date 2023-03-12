@@ -1,9 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -27,5 +24,8 @@ interface RecipeEntityDao {
 
     @Query("DELETE FROM recipe_table WHERE id = :id")
     suspend fun deleteRecipe(id: Int)
+
+    @Update
+    suspend fun updateRecipe(recipe: RecipeEntity)
 
 }

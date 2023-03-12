@@ -1,5 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.domain.model
 
+import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 
 
 data class Recipe(
@@ -48,4 +49,5 @@ data class Recipe(
         analyzedInstructions = analyzedInstructions,
         extendedIngredients = extendedIngredients,
     )
+
 }
