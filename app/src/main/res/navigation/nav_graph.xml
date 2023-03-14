@@ -18,7 +18,11 @@
         android:id="@+id/favoritesFragment"
         android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.FavoritesFragment"
         android:label="Favorites"
-        tools:layout="@layout/fragment_favorite"/>
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments.ExploreFragment"
