@@ -13,6 +13,12 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
 
     val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    private var onItemClickListener: ((Recipe)->Unit)? = null
+
+    fun setOnItemClickListener(listener: (Recipe)-> Unit){
+        onItemClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val binding = FavoriteListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavoriteViewHolder(binding)
@@ -20,6 +26,9 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         val favorite = differ.currentList[position]
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { it(favorite) }
+        }
         holder.setData(favorite)
     }
 

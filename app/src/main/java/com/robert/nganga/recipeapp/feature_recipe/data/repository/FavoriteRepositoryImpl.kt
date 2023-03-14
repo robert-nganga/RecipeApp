@@ -5,12 +5,13 @@ import com.robert.nganga.recipeapp.feature_recipe.data.local.RecipeDatabase
 import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Favorite
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
+import com.robert.nganga.recipeapp.feature_recipe.domain.repository.FavoriteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class FavoriteRepositoryImpl@Inject constructor(
-        database: RecipeDatabase): FavoriteRepository{
+        database: RecipeDatabase): FavoriteRepository {
 
     private val favoriteDao = database.favoriteDao()
 
