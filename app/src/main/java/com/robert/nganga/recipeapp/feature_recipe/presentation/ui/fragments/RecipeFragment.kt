@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -65,7 +68,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
             when(it.itemId){
                 R.id.favoriteIcon -> {
                     recipe?.let { recipe->
-                        favoriteViewModel.insertFavoriteRecipe(recipe.toFavorite())
+                        favoriteViewModel.insertFavoriteRecipe(recipe)
                     }
                     Toast.makeText(requireContext(), "Recipe added to favorites", Toast.LENGTH_SHORT).show()
                 }
@@ -118,6 +121,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         val time = "${recipe.readyInMinutes} mins"
         val servings = "${recipe.servings} servings"
         this.apply {
+            toolbar.menu.findItem(R.id.favoriteIcon).icon = if (recipe.isFavorite) icFavoriteFilledImage else icFavoriteBorderImage
             extendedFab.text = recipe.sourceName
             tvRecipeTitle.text = recipe.title
             tvRecipeTime.text = time

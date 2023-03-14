@@ -26,15 +26,19 @@ data class Recipe(
     val vegan: Boolean,
     val vegetarian: Boolean,
     val timeStamp: String?,
+    val tag: String?,
     val isFavorite: Boolean = false
 ){
-    fun toFavorite() = Favorite(
+
+    fun toRecipeEntity() = RecipeEntity(
         aggregateLikes = aggregateLikes,
+        analyzedInstructions = analyzedInstructions,
         cookingMinutes = cookingMinutes,
         cuisines = cuisines,
         dairyFree = dairyFree,
         diets = diets,
         dishTypes = dishTypes,
+        extendedIngredients = extendedIngredients,
         glutenFree = glutenFree,
         id = id,
         image = image,
@@ -46,8 +50,11 @@ data class Recipe(
         sourceUrl = sourceUrl,
         summary = summary,
         title = title,
-        analyzedInstructions = analyzedInstructions,
-        extendedIngredients = extendedIngredients,
+        vegan = vegan,
+        vegetarian = vegetarian,
+        tag = tag,
+        timeStamp = timeStamp,
+        isFavorite = isFavorite
     )
 
 }

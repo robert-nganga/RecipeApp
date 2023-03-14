@@ -1,7 +1,9 @@
 package com.robert.nganga.recipeapp.feature_recipe.data.local.dao
 
-import androidx.room.*
-import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.FavoriteEntity
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Update
+import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -9,18 +11,19 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteDao {
     //create CRUD operations for the FavoriteEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavorite(favoriteEntity: FavoriteEntity)
+    @Update
+    suspend fun addFavorite(recipe: RecipeEntity)
 
-    @Query("SELECT * FROM favorite_table")
-    fun getAllFavorites(): Flow<List<FavoriteEntity>>
+    @Query("SELECT * FROM recipe_table WHERE id = :id")
+    fun getFavoriteById(id: Int): Flow<List<RecipeEntity>>
 
-    @Query("SELECT * FROM favorite_table WHERE id = :id")
-    fun getFavorite(id: Int): Flow<List<FavoriteEntity>>
+    @Query("SELECT * FROM recipe_table WHERE isFavorite = 1")
+    fun getAllFavorites(): Flow<List<RecipeEntity>>
 
-    @Delete
-    suspend fun deleteFavorite(favoriteEntity: FavoriteEntity)
+    @Update
+    suspend fun removeFavorite(recipe: RecipeEntity)
 
-    @Query("DELETE FROM favorite_table")
-    suspend fun deleteAllFavorites()
+    @Update
+    suspend fun removeAllFavorites(recipes: List<RecipeEntity>)
+
 }
