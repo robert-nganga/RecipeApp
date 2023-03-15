@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -25,12 +23,11 @@ import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PagerAdap
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class RecipeFragment: Fragment(R.layout.fragment_recipe){
 
-    private val favoriteViewModel: FavoriteViewModel by viewModels()
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var viewModel: RecipeViewModel
     private var _binding : FragmentRecipeBinding? = null
     private val binding get() = _binding!!
@@ -59,6 +56,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        favoriteViewModel = (activity as MainActivity).favoriteViewModel
         viewModel.getIds(args.id)
         viewPager2 = binding.viewPager
         tabLayout = binding.tabLayout
@@ -100,12 +98,12 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     private fun handleFavorite(favorite: Recipe) {
         if (favorite.isFavorite) {
             favoriteViewModel.deleteFavoriteRecipe(favorite)
-            Snackbar.make(requireView(), "Recipe removed to favorites", Snackbar.LENGTH_SHORT)
+            Snackbar.make(requireView(), "Recipe removed from favorites", Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.extendedFab)
                 .show()
         } else {
             favoriteViewModel.insertFavoriteRecipe(favorite)
-            Snackbar.make(requireView(), "Recipe added from favorites", Snackbar.LENGTH_SHORT)
+            Snackbar.make(requireView(), "Recipe added to favorites", Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.extendedFab)
                 .show()
         }

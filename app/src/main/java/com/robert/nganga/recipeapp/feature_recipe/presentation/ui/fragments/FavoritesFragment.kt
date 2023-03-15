@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,14 +14,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentFavoriteBinding
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.FavoriteAdapter
+import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
 class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
 
-    private val viewModel: FavoriteViewModel by viewModels()
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var favoriteAdapter: FavoriteAdapter
     private var _binding : FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +37,7 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupFavoriteRecyclerView()
-
+        favoriteViewModel = (activity as MainActivity).favoriteViewModel
         binding.floatingActionButton.setOnClickListener {
             showConfirmDialog()
         }
@@ -51,7 +49,7 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
             findNavController().navigate(R.id.action_favoritesFragment_to_recipeFragment, bundle)
         }
 
-        viewModel.favorites.observe(viewLifecycleOwner) { favorites ->
+        favoriteViewModel.favorites.observe(viewLifecycleOwner) { favorites ->
             favorites.data?.let {
                 favoriteAdapter.differ.submitList(it)
             }
@@ -72,10 +70,10 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val favorite = favoriteAdapter.differ.currentList[viewHolder.adapterPosition]
-            viewModel.deleteFavoriteRecipe(favorite)
+            favoriteViewModel.deleteFavoriteRecipe(favorite)
             Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Undo"){
-                    viewModel.insertFavoriteRecipe(favorite)
+                    favoriteViewModel.insertFavoriteRecipe(favorite)
                 }.setAnchorView(binding.floatingActionButton)
                 .show()
         }
@@ -89,7 +87,7 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
             }
             .setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
                 // Respond to positive button press
-                viewModel.deleteAllFavoriteRecipes()
+                favoriteViewModel.deleteAllFavoriteRecipes()
             }
             .show()
     }

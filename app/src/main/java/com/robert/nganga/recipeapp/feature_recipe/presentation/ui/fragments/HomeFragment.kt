@@ -10,13 +10,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
-import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
 
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
     private lateinit var viewModel: RecipeViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -34,14 +37,20 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        favoriteViewModel = (activity as MainActivity).favoriteViewModel
         recipeAdapter = RecipeAdapter()
         setupRecipeRecyclerView()
+
 
         recipeAdapter.setOnItemClickListener { recipe->
             val bundle = Bundle().apply {
                 putInt("id", recipe.id)
             }
             findNavController().navigate(R.id.action_homeFragment_to_recipeFragment, bundle)
+        }
+
+        recipeAdapter.setOnFavoriteClickListener {
+            handleFavorite(it)
         }
 
         binding.chipAll.isChecked = true
@@ -62,6 +71,14 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     recipeAdapter.differ.submitList(recipes)
                 }
             }
+        }
+    }
+    private fun handleFavorite(favorite: Recipe) {
+        if (favorite.isFavorite) {
+            favoriteViewModel.deleteFavoriteRecipe(favorite)
+        } else {
+            favoriteViewModel.insertFavoriteRecipe(favorite)
+
         }
     }
 
