@@ -27,7 +27,7 @@ data class Recipe(
     val vegetarian: Boolean,
     val timeStamp: String?,
     val tag: String?,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean
 ){
 
     fun toRecipeEntity() = RecipeEntity(

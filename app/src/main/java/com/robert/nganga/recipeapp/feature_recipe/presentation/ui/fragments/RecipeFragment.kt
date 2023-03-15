@@ -1,11 +1,11 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.robert.nganga.recipeapp.R
@@ -64,13 +65,12 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         setupViewPager()
 
         binding.toolbar.inflateMenu(R.menu.top_app_bar)
-        binding.toolbar.setOnMenuItemClickListener { it ->
+        binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
-                R.id.favoriteIcon -> {
+                R.id.action_favorite -> {
                     recipe?.let { recipe->
-                        favoriteViewModel.insertFavoriteRecipe(recipe)
+                        handleFavorite(recipe)
                     }
-                    Toast.makeText(requireContext(), "Recipe added to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
             true
@@ -97,6 +97,20 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         }
     }
 
+    private fun handleFavorite(favorite: Recipe) {
+        if (favorite.isFavorite) {
+            favoriteViewModel.deleteFavoriteRecipe(favorite)
+            Snackbar.make(requireView(), "Recipe removed to favorites", Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.extendedFab)
+                .show()
+        } else {
+            favoriteViewModel.insertFavoriteRecipe(favorite)
+            Snackbar.make(requireView(), "Recipe added from favorites", Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.extendedFab)
+                .show()
+        }
+    }
+
     private fun Context.shareRecipe(recipeUrl: String){
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -106,6 +120,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         startActivity(shareIntent)
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun openWebPage(url: String) {
         val webpage: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
@@ -121,7 +136,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         val time = "${recipe.readyInMinutes} mins"
         val servings = "${recipe.servings} servings"
         this.apply {
-            toolbar.menu.findItem(R.id.favoriteIcon).icon = if (recipe.isFavorite) icFavoriteFilledImage else icFavoriteBorderImage
+            toolbar.menu.findItem(R.id.action_favorite).icon = if (recipe.isFavorite) icFavoriteFilledImage else icFavoriteBorderImage
             extendedFab.text = recipe.sourceName
             tvRecipeTitle.text = recipe.title
             tvRecipeTime.text = time

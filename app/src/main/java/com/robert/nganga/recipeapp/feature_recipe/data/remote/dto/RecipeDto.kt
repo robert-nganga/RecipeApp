@@ -66,7 +66,8 @@ data class RecipeDto(
             vegan = vegan,
             vegetarian = vegetarian,
             tag = null,
-            timeStamp = null
+            timeStamp = null,
+            isFavorite = false
         )
     }
 }
