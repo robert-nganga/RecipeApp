@@ -1,6 +1,7 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,16 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
             }
             true
         }
+        binding.etIngredient.setOnKeyListener { _, keyCode, keyEvent ->
+            if (keyEvent.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val text = binding.etIngredient.text.toString()
+                if (text.isNotEmpty()) {
+                    setChips(text)
+                    binding.etIngredient.text?.clear()
+                }
+            }
+            true
+        }
 
         binding.btnApply.setOnClickListener {
             val text = binding.etIngredient.text.toString()
@@ -54,6 +65,9 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
         val chip = layoutInflater.inflate(R.layout.input_chip_item, binding.chipGroup, false) as Chip
         chip.text = text
         binding.chipGroup.addView(chip)
+        chip.setOnCloseIconClickListener {
+            binding.chipGroup.removeView(chip)
+        }
     }
 
     override fun onDestroyView() {
