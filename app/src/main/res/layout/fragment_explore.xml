@@ -36,9 +36,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/etIngredient"
             android:layout_width="match_parent"
+            android:imeOptions="actionSearch"
+            android:inputType="textNoSuggestions"
+            android:selectAllOnFocus="true"
             android:layout_height="60dp" />
     </com.google.android.material.textfield.TextInputLayout>
 

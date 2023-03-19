@@ -42,7 +42,7 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
             true
         }
         binding.etIngredient.setOnKeyListener { _, keyCode, keyEvent ->
-            if (keyEvent.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+            if (keyEvent.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 val text = binding.etIngredient.text.toString()
                 if (text.isNotEmpty()) {
                     setChips(text)
