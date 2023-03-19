@@ -11,6 +11,7 @@ import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.ActivityMainBinding
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.SearchByIngredientsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: RecipeViewModel by viewModels()
     val favoriteViewModel: FavoriteViewModel by viewModels()
+    val searchByIngredientsViewModel: SearchByIngredientsViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 

@@ -4,9 +4,11 @@ import androidx.lifecycle.*
 import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.RecipeByIngredients
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.SearchRecipeByIngredients
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchByIngredientsViewModel@Inject constructor(
     savedStateHandle: SavedStateHandle,
    private val searchRecipeByIngredients: SearchRecipeByIngredients): ViewModel() {

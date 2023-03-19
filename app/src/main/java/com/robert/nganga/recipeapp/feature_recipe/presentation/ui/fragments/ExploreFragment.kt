@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentExploreBinding
+import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
+import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.SearchByIngredientsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
 class ExploreFragment: Fragment(R.layout.fragment_explore) {
+
+    private lateinit var viewModel: SearchByIngredientsViewModel
 
     private var _binding : FragmentExploreBinding? = null
     private val binding get() = _binding!!
@@ -30,27 +33,8 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).searchByIngredientsViewModel
 
-        binding.etIngredient.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val text = binding.etIngredient.text.toString()
-                if (text.isNotEmpty()) {
-                    setChips(text)
-                    binding.etIngredient.text?.clear()
-                }
-            }
-            true
-        }
-        binding.etIngredient.setOnKeyListener { _, keyCode, keyEvent ->
-            if (keyEvent.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                val text = binding.etIngredient.text.toString()
-                if (text.isNotEmpty()) {
-                    setChips(text)
-                    binding.etIngredient.text?.clear()
-                }
-            }
-            true
-        }
 
         binding.btnApply.setOnClickListener {
             val text = binding.etIngredient.text.toString()
