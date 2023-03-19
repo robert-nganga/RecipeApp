@@ -9,9 +9,11 @@ import com.robert.nganga.recipeapp.feature_recipe.data.remote.RecipeApi
 import com.robert.nganga.recipeapp.feature_recipe.data.remote.RecipeApi.Companion.BASE_URL
 import com.robert.nganga.recipeapp.feature_recipe.data.repository.FavoriteRepositoryImpl
 import com.robert.nganga.recipeapp.feature_recipe.data.repository.RecipeRepositoryImpl
+import com.robert.nganga.recipeapp.feature_recipe.data.repository.SearchByIngredientsRepositoryImpl
 import com.robert.nganga.recipeapp.feature_recipe.data.util.GsonParser
 import com.robert.nganga.recipeapp.feature_recipe.domain.repository.FavoriteRepository
 import com.robert.nganga.recipeapp.feature_recipe.domain.repository.RecipeRepository
+import com.robert.nganga.recipeapp.feature_recipe.domain.repository.SearchByIngredientsRepository
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRandomRecipes
 import dagger.Module
 import dagger.Provides
@@ -50,6 +52,14 @@ object RecipeModule {
         database: RecipeDatabase,
     ): FavoriteRepository {
         return FavoriteRepositoryImpl(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchByIngredientRepository(
+        api: RecipeApi
+    ): SearchByIngredientsRepository {
+        return SearchByIngredientsRepositoryImpl(api)
     }
 
     @Provides
