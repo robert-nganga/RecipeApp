@@ -5,4 +5,5 @@
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="elevation">4dp</item>
     </style>
+
 </resources>

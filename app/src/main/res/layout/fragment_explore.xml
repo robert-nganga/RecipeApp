@@ -75,27 +75,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etIngredient"
                     android:layout_width="match_parent"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textNoSuggestions"
-                    android:selectAllOnFocus="true"
                     android:layout_height="60dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnApply"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/green_500"
                 android:text="Add"
                 android:elevation="5dp"
                 style="?attr/materialButtonOutlinedStyle"
+                app:shapeAppearanceOverlay="@style/CustomChipStyle"
+                app:cornerRadius="10dp"
+                app:backgroundTint="@color/white"
+                app:iconTint="@color/green_500"
                 app:icon="@drawable/ic_baseline_add_24"
-                app:strokeColor="@color/grey_700"
+                app:strokeColor="@color/green_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 

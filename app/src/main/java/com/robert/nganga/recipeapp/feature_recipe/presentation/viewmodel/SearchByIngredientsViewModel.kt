@@ -13,17 +13,16 @@ class SearchByIngredientsViewModel@Inject constructor(
     savedStateHandle: SavedStateHandle,
    private val searchRecipeByIngredients: SearchRecipeByIngredients): ViewModel() {
 
-    private var _result : MutableLiveData<Resource<List<RecipeByIngredients>>> = MutableLiveData()
-    val result: LiveData<Resource<List<RecipeByIngredients>>> get() = _result
+    private val _query = savedStateHandle.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
+
+    val result = _query.switchMap { query ->
+        searchRecipeByIngredients(query).asLiveData()
+    }
 
 
 
     fun getQuery(query: String){
-        _result.value = Resource.loading()
-        viewModelScope.launch {
-            val result = searchRecipeByIngredients(query)
-            _result.value = result
-        }
+        _query.value = query
     }
 
     companion object{

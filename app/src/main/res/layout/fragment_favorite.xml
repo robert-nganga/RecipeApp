@@ -27,6 +27,7 @@
         android:layout_marginBottom="100dp"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:iconTint="@color/white"
+        app:backgroundTint="@color/green_200"
         app:srcCompat="@drawable/ic_baseline_delete_24"
         android:contentDescription="delete all favorites" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

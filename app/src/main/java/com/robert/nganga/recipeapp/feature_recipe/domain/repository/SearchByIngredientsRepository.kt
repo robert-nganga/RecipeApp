@@ -5,5 +5,5 @@ import com.robert.nganga.recipeapp.feature_recipe.domain.model.RecipeByIngredien
 
 interface SearchByIngredientsRepository {
 
-    suspend fun searchByIngredients(ingredients: String): Resource<List<RecipeByIngredients>>
+    suspend fun searchByIngredients(ingredients: String): List<RecipeByIngredients>
 }
