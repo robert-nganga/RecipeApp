@@ -1,21 +1,18 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.databinding.FragmentExploreBinding
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.SearchByIngredientsAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.SearchByIngredientsViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class ExploreFragment: Fragment(R.layout.fragment_explore) {
@@ -41,6 +38,13 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
 
         adapter = SearchByIngredientsAdapter()
         binding.rvRecipeByIngredients.adapter = adapter
+
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putInt("id", it.id)
+            }
+            findNavController().navigate(R.id.action_exploreFragment_to_recipeFragment, bundle)
+        }
 
         binding.btnApply.setOnClickListener {
             val text = binding.etIngredient.text.toString()

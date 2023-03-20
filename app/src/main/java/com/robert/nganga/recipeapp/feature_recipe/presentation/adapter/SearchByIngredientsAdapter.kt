@@ -13,6 +13,12 @@ class SearchByIngredientsAdapter: RecyclerView.Adapter<SearchByIngredientsAdapte
 
     val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    private var onItemClickListener: ((RecipeByIngredients)->Unit)? = null
+
+    fun setOnItemClickListener(listener: (RecipeByIngredients)-> Unit){
+        onItemClickListener = listener
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchByIngredientsViewHolder {
         val binding = RecipeByIngredientItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,6 +27,9 @@ class SearchByIngredientsAdapter: RecyclerView.Adapter<SearchByIngredientsAdapte
 
     override fun onBindViewHolder(holder: SearchByIngredientsViewHolder, position: Int) {
         val recipeByIngredients = differ.currentList[position]
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { it(recipeByIngredients) }
+        }
         holder.setData(recipeByIngredients)
     }
 
