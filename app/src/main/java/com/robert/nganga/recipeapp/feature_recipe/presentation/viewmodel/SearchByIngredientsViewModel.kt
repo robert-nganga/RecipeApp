@@ -1,11 +1,11 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel
 
-import androidx.lifecycle.*
-import com.robert.nganga.recipeapp.core.util.Resource
-import com.robert.nganga.recipeapp.feature_recipe.domain.model.RecipeByIngredients
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.SearchRecipeByIngredients
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

@@ -16,8 +16,9 @@ class RecipeViewModel@Inject constructor(
 ) : ViewModel() {
 
     private var _tag = savedStateHandle.getLiveData(CURRENT_TAG, DEFAULT_TAG)
-
     private var _id = MutableLiveData<Int>()
+
+    
 
     val recipes = _tag.switchMap { tag ->
         getRandomRecipes(tag).asLiveData()
