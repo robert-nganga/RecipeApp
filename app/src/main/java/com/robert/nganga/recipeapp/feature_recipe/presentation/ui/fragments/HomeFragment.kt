@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
+import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.databinding.FragmentHomeBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAdapter
@@ -57,12 +58,63 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         setupChipGroup()
 
         viewModel.recipes.observe(viewLifecycleOwner){ response ->
+            when(response.status){
+                 Resource.Status.SUCCESS-> {
+                     hideViews()
+                     displayData(response)
+                }
+
+                Resource.Status.ERROR-> {
+                    toggleProgressBar(false)
+                    displayData(response)
+                    response.message?.let { message ->
+                        if (response.data.isNullOrEmpty()) {
+                            showErrorMessage(message)
+                        }
+                    }
+                }
+
+                Resource.Status.LOADING-> {
+                    displayData(response)
+                    if (response.data.isNullOrEmpty()) {
+                        toggleProgressBar(true)
+                    }
+                }
+            }
             response.data?.let { recipes ->
                 if(recipes.isNotEmpty()){
                     recipeAdapter.differ.submitList(recipes)
                 }
             }
         }
+    }
+
+    private fun displayData(response: Resource<List<Recipe>>) {
+        response.data?.let { recipes ->
+            if(recipes.isNotEmpty()){
+                recipeAdapter.differ.submitList(recipes)
+            }
+        }
+    }
+
+    private fun showErrorMessage(message: String){
+        binding.tvError.text = message
+        binding.tvError.visibility = View.VISIBLE
+        binding.btnRetry.visibility = View.VISIBLE
+    }
+
+    private fun toggleProgressBar(isLoading: Boolean){
+        if(isLoading){
+            binding.progressBar.visibility = View.VISIBLE
+        }else{
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun hideViews(){
+        binding.progressBar.visibility = View.INVISIBLE
+        binding.tvError.visibility = View.INVISIBLE
+        binding.btnRetry.visibility = View.INVISIBLE
     }
 
     private fun setupChipGroup() {

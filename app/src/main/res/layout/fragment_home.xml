@@ -133,9 +133,46 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chipsHorizontalScrollView"
         app:spanCount="2"
         tools:listitem="@layout/recipe_item" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvRecipe"
+        app:layout_constraintStart_toStartOf="@+id/rvRecipe"
+        app:layout_constraintTop_toTopOf="@+id/rvRecipe"
+        app:layout_constraintVertical_bias="0.29000002" />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvRecipe"
+        app:layout_constraintStart_toStartOf="@+id/rvRecipe"
+        app:layout_constraintTop_toTopOf="@+id/rvRecipe"
+        app:layout_constraintVertical_bias="0.39"
+        tools:text="Error" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retry"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rvRecipe"
+        app:layout_constraintStart_toStartOf="@+id/rvRecipe"
+        app:layout_constraintTop_toTopOf="@+id/rvRecipe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
