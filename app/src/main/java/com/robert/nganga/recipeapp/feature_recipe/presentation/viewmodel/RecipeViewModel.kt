@@ -16,9 +16,9 @@ class RecipeViewModel@Inject constructor(
 ) : ViewModel() {
 
     private var _tag = savedStateHandle.getLiveData(CURRENT_TAG, DEFAULT_TAG)
-    private var _id = MutableLiveData<Int>()
+    val tag: LiveData<String> = _tag
 
-    
+    private var _id = MutableLiveData<Int>()
 
     val recipes = _tag.switchMap { tag ->
         getRandomRecipes(tag).asLiveData()
@@ -29,21 +29,19 @@ class RecipeViewModel@Inject constructor(
     }
 
 
-    fun getTags(tag:String){
-        val currentTag = if (tag == "all") DEFAULT_TAG else tag
-        if (currentTag != _tag.value){
+    fun updateCategory(tag:String){
+        if (tag != _tag.value){
             _tag.value = tag
-            Log.i("RecipeViewModel", "Fetched data with tag: $tag")
         }
 
     }
 
-    fun getIds(id:Int){
+    fun updateId(id:Int){
         _id.value = id
     }
 
     companion object{
         const val CURRENT_TAG = "current_tag"
-        const val DEFAULT_TAG = ""
+        const val DEFAULT_TAG = "all"
     }
 }

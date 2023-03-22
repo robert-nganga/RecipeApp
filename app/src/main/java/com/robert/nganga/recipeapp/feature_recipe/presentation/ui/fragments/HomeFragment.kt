@@ -15,6 +15,7 @@ import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAda
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
+import java.util.ArrayList
 
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
@@ -53,15 +54,14 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             handleFavorite(it)
         }
 
-        binding.chipAll.isChecked = true
-//        val text = binding.chipGroup.findViewById<Chip>(binding.chipGroup.checkedChipId).text.toString()
-//        viewModel.getTags(text)
+        val category = viewModel.tag.value
+        getSelectedCategoryChip(category)?.let { binding.chipGroup.check(it) }
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if(checkedIds.isNotEmpty()){
                 val chip = group.findViewById<Chip>(checkedIds.first())
                 val tag = chip.text.toString()
                 Toast.makeText(context, tag, Toast.LENGTH_SHORT).show()
-                viewModel.getTags(tag)
+                viewModel.updateCategory(tag)
             }
         }
 
@@ -73,6 +73,19 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             }
         }
     }
+
+    private fun getSelectedCategoryChip(tag: String?): Int? {
+        val chips = ArrayList<View>()
+        binding.chipGroup.findViewsWithText(chips, tag, View.FIND_VIEWS_WITH_TEXT)
+
+        return if (chips.isNotEmpty()) {
+            val chip = chips[0] as Chip
+            chip.id
+        }else{
+            null
+        }
+    }
+
     private fun handleFavorite(favorite: Recipe) {
         if (favorite.isFavorite) {
             favoriteViewModel.deleteFavoriteRecipe(favorite)
