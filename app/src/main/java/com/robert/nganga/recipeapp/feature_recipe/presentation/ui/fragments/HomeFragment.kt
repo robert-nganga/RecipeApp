@@ -40,7 +40,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         viewModel = (activity as MainActivity).viewModel
         favoriteViewModel = (activity as MainActivity).favoriteViewModel
         recipeAdapter = RecipeAdapter()
-        setupRecipeRecyclerView()
+        binding.rvRecipe.adapter = recipeAdapter
 
 
         recipeAdapter.setOnItemClickListener { recipe->
@@ -51,9 +51,21 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
         recipeAdapter.setOnFavoriteClickListener {
-            handleFavorite(it)
+            favoriteViewModel.toggleFavorite(it)
         }
 
+        setupChipGroup()
+
+        viewModel.recipes.observe(viewLifecycleOwner){ response ->
+            response.data?.let { recipes ->
+                if(recipes.isNotEmpty()){
+                    recipeAdapter.differ.submitList(recipes)
+                }
+            }
+        }
+    }
+
+    private fun setupChipGroup() {
         val category = viewModel.tag.value
         getSelectedCategoryChip(category)?.let { binding.chipGroup.check(it) }
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -62,14 +74,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                 val tag = chip.text.toString()
                 Toast.makeText(context, tag, Toast.LENGTH_SHORT).show()
                 viewModel.updateCategory(tag)
-            }
-        }
-
-        viewModel.recipes.observe(viewLifecycleOwner){ response ->
-            response.data?.let { recipes ->
-                if(recipes.isNotEmpty()){
-                    recipeAdapter.differ.submitList(recipes)
-                }
             }
         }
     }
@@ -83,21 +87,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
             chip.id
         }else{
             null
-        }
-    }
-
-    private fun handleFavorite(favorite: Recipe) {
-        if (favorite.isFavorite) {
-            favoriteViewModel.deleteFavoriteRecipe(favorite)
-        } else {
-            favoriteViewModel.insertFavoriteRecipe(favorite)
-
-        }
-    }
-
-    private fun setupRecipeRecyclerView() {
-        binding.rvRecipe.apply {
-            adapter = recipeAdapter
         }
     }
 

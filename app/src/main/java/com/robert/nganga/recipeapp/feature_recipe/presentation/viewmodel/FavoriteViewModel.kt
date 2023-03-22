@@ -1,8 +1,6 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,13 +12,12 @@ import javax.inject.Inject
 class FavoriteViewModel@Inject constructor(
     private val removeAllFavorites: RemoveAllFavorites,
     private val removeFavorite: RemoveFavorite,
-    private val getFavoriteById: GetFavoriteById,
     private val addFavorite: AddFavorite,
-    private val getAllFavorites: GetAllFavorites): ViewModel() {
+    getAllFavorites: GetAllFavorites): ViewModel() {
 
-    val favorite: String = "Favorite"
 
     val favorites = getAllFavorites().asLiveData()
+
 
     fun insertFavoriteRecipe(favorite: Recipe) = viewModelScope.launch {
         addFavorite(favorite.copy(isFavorite = true))
@@ -35,6 +32,14 @@ class FavoriteViewModel@Inject constructor(
             removeAllFavorites(it.map { favorite->
                 favorite.copy(isFavorite = false)
             })
+        }
+    }
+
+    fun toggleFavorite(recipe: Recipe) = viewModelScope.launch {
+        if (recipe.isFavorite) {
+            removeFavorite(recipe.copy(isFavorite = false))
+        } else {
+            addFavorite(recipe.copy(isFavorite = true))
         }
     }
 }
