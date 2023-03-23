@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -17,7 +16,6 @@ import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.RecipeAda
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.FavoriteViewModel
 import com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel.RecipeViewModel
-import java.util.ArrayList
 
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
