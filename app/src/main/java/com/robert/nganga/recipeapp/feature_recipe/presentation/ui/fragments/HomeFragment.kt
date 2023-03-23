@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
@@ -56,6 +57,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
 
         setupChipGroup()
+
+        binding.btnRetry.setOnClickListener {
+            val selectedChip = binding.chipGroup.checkedChipId
+            val chipText = binding.chipGroup.findViewById<Chip>(selectedChip).text
+            viewModel.retry(chipText as String)
+        }
 
         viewModel.recipes.observe(viewLifecycleOwner){ response ->
             when(response.status){

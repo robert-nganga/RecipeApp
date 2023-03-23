@@ -28,12 +28,14 @@ class RecipeViewModel@Inject constructor(
         getRecipeById(id).asLiveData()
     }
 
+    fun retry(tag:String){
+        _tag.value = tag
+    }
 
     fun updateCategory(tag:String){
         if (tag != _tag.value){
             _tag.value = tag
         }
-
     }
 
     fun updateId(id:Int){

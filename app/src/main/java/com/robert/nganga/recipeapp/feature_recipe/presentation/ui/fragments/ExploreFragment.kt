@@ -35,7 +35,6 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).searchByIngredientsViewModel
-
         adapter = SearchByIngredientsAdapter()
         binding.rvRecipeByIngredients.adapter = adapter
 
@@ -46,6 +45,19 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
             findNavController().navigate(R.id.action_exploreFragment_to_recipeFragment, bundle)
         }
 
+        setButtonListeners()
+
+        viewModel.result.observe(viewLifecycleOwner) { response->
+            response.data?.let {
+                adapter.differ.submitList(it)
+            }
+
+        }
+
+
+    }
+
+    private fun setButtonListeners() {
         binding.btnApply.setOnClickListener {
             val text = binding.etIngredient.text.toString()
             if (text.isNotEmpty()) {
@@ -58,15 +70,6 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
             val tags = binding.chipGroup.children.map { it as Chip }.map { it.text.toString() }.joinToString(",")
             viewModel.getQuery(tags)
         }
-
-        viewModel.result.observe(viewLifecycleOwner) { response->
-            response.data?.let {
-                adapter.differ.submitList(it)
-            }
-
-        }
-
-
     }
 
     private fun setChips(text: String){
