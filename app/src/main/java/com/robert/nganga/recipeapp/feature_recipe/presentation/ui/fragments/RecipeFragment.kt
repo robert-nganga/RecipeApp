@@ -69,26 +69,58 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         viewModel.recipe.observe(viewLifecycleOwner) { response ->
             when(response.status){
                 Resource.Status.SUCCESS -> {
+                    binding.progressBarRecipe.visibility = View.GONE
+                    binding.makeViewsVisible()
                     response.data?.let {
                         binding.bindRecipeData(it)
                         this.recipe = it
                     }
                 }
                 Resource.Status.ERROR -> {
-                    response.message?.let {
-                        Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT)
-                            .setAnchorView(binding.extendedFab)
-                            .show()
+                    binding.progressBarRecipe.visibility = View.GONE
+                    if (response.data == null){
+                        binding.makeViewsInvisible()
+                        response.message?.let { message ->
+                            showErrorMessages(message)
+                        }
+                    }else{
+                        binding.makeViewsVisible()
+                        response.data.let {
+                            binding.bindRecipeData(it)
+                            this.recipe = it
+                        }
                     }
                 }
                 Resource.Status.LOADING -> {
+                    binding.tvErrorRecipe.visibility = View.INVISIBLE
+                    binding.btnRetryRecipe.visibility = View.INVISIBLE
+                    if (response.data == null) {
+                        binding.makeViewsInvisible()
+                        binding.progressBarRecipe.visibility = View.VISIBLE
+                    }else{
+                        binding.makeViewsVisible()
+                        response.data.let {
+                            binding.bindRecipeData(it)
+                            this.recipe = it
+                        }
 
+                    }
                 }
             }
         }
     }
 
+    private fun showErrorMessages(message: String){
+        binding.tvErrorRecipe.text = message
+        binding.tvErrorRecipe.visibility = View.VISIBLE
+        binding.btnRetryRecipe.visibility = View.VISIBLE
+    }
+
     private fun setupListeners() {
+        binding.btnRetryRecipe.setOnClickListener {
+            viewModel.updateId(args.id)
+        }
+
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.action_favorite -> {
@@ -144,6 +176,36 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         val packageManager = requireActivity().packageManager
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
+        }
+    }
+
+    private fun FragmentRecipeBinding.makeViewsInvisible(){
+        this.apply {
+            tvRecipeTitle.visibility = View.INVISIBLE
+            tvRecipeTime.visibility = View.INVISIBLE
+            tvServing.visibility = View.INVISIBLE
+            imgToolBar.visibility = View.INVISIBLE
+            extendedFab.visibility = View.INVISIBLE
+            imgShareRecipe.visibility = View.INVISIBLE
+            tabLayout.visibility = View.INVISIBLE
+            viewPager.visibility = View.INVISIBLE
+            imageView4.visibility = View.INVISIBLE
+            imageView7.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun FragmentRecipeBinding.makeViewsVisible(){
+        this.apply {
+            imageView4.visibility = View.VISIBLE
+            imageView7.visibility = View.VISIBLE
+            tvRecipeTitle.visibility = View.VISIBLE
+            tvRecipeTime.visibility = View.VISIBLE
+            tvServing.visibility = View.VISIBLE
+            imgToolBar.visibility = View.VISIBLE
+            extendedFab.visibility = View.VISIBLE
+            imgShareRecipe.visibility = View.VISIBLE
+            tabLayout.visibility = View.VISIBLE
+            viewPager.visibility = View.VISIBLE
         }
     }
 
