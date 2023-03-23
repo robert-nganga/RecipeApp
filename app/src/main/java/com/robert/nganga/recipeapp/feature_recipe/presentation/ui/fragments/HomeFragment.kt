@@ -65,37 +65,49 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         viewModel.recipes.observe(viewLifecycleOwner){ response ->
             when(response.status){
                  Resource.Status.SUCCESS-> {
-                     hideViews()
-                     displayData(response)
+                     onSuccess(response)
                 }
 
                 Resource.Status.ERROR-> {
-                    toggleProgressBar(false)
-                    displayData(response)
-                    response.message?.let { message ->
-                        if (response.data.isNullOrEmpty()) {
-                            showErrorMessage(message)
-                        }
-                    }
+                    onError(response)
                 }
 
                 Resource.Status.LOADING-> {
-                    displayData(response)
-                    if (response.data.isNullOrEmpty()) {
-                        toggleProgressBar(true)
-                    }
-                }
-            }
-            response.data?.let { recipes ->
-                if(recipes.isNotEmpty()){
-                    recipeAdapter.differ.submitList(recipes)
+                    onLoading(response)
                 }
             }
         }
     }
 
+    private fun onLoading(response: Resource<List<Recipe>>) {
+        if (response.data.isNullOrEmpty()) {
+            toggleProgressBar(true)
+        }else{
+            displayData(response)
+        }
+    }
+
+    private fun onError(response: Resource<List<Recipe>>) {
+        toggleProgressBar(false)
+        if(response.data.isNullOrEmpty()) {
+            response.message?.let { message ->
+                showErrorMessage(message)
+            }
+        }else{
+            displayData(response)
+        }
+    }
+
+    private fun onSuccess(response: Resource<List<Recipe>>) {
+        toggleProgressBar(false)
+        displayData(response)
+    }
+
     private fun displayData(response: Resource<List<Recipe>>) {
         binding.rvRecipe.visibility = View.VISIBLE
+        binding.tvError.visibility = View.INVISIBLE
+        binding.btnRetry.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.INVISIBLE
         response.data?.let { recipes ->
             if(recipes.isNotEmpty()){
                 recipeAdapter.differ.submitList(recipes)
@@ -104,7 +116,6 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun showErrorMessage(message: String){
-        binding.rvRecipe.visibility = View.INVISIBLE
         binding.tvError.text = message
         binding.tvError.visibility = View.VISIBLE
         binding.btnRetry.visibility = View.VISIBLE
@@ -113,15 +124,13 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     private fun toggleProgressBar(isLoading: Boolean){
         if(isLoading){
             binding.progressBar.visibility = View.VISIBLE
+            recipeAdapter.differ.submitList(emptyList())
+            binding.rvRecipe.visibility = View.INVISIBLE
+            binding.btnRetry.visibility = View.INVISIBLE
+            binding.tvError.visibility = View.INVISIBLE
         }else{
             binding.progressBar.visibility = View.INVISIBLE
         }
-    }
-
-    private fun hideViews(){
-        binding.progressBar.visibility = View.INVISIBLE
-        binding.tvError.visibility = View.INVISIBLE
-        binding.btnRetry.visibility = View.INVISIBLE
     }
 
     private fun setupChipGroup() {

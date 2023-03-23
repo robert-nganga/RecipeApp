@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.robert.nganga.recipeapp.R
+import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.databinding.FragmentExploreBinding
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.SearchByIngredientsAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
@@ -47,14 +48,39 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
 
         setButtonListeners()
 
+        binding.btnTryAgain.setOnClickListener {
+            viewModel.updateIngredients(viewModel.query.value.toString())
+        }
         viewModel.result.observe(viewLifecycleOwner) { response->
-            response.data?.let {
-                adapter.differ.submitList(it)
+            when(response.status){
+                Resource.Status.SUCCESS -> {
+                    handleProgressBar(false)
+                    binding.tvErrorMsg.visibility = View.INVISIBLE
+                    binding.btnTryAgain.visibility = View.INVISIBLE
+                    binding.rvRecipeByIngredients.visibility = View.VISIBLE
+                    response.data?.let {
+                        adapter.differ.submitList(it)
+                    }
+                }
+                Resource.Status.LOADING -> {
+                    handleProgressBar(true)
+                }
+                Resource.Status.ERROR -> {
+                    handleProgressBar(false)
+                    showErrorMsg(response.message.toString())
+                }
             }
 
         }
 
 
+    }
+
+    private fun showErrorMsg(error: String) {
+        binding.tvErrorMsg.text = error
+        binding.rvRecipeByIngredients.visibility = View.INVISIBLE
+        binding.tvErrorMsg.visibility = View.VISIBLE
+        binding.btnTryAgain.visibility = View.VISIBLE
     }
 
     private fun setButtonListeners() {
@@ -68,7 +94,7 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
 
         binding.floatingActionButton.setOnClickListener {
             val tags = binding.chipGroup.children.map { it as Chip }.map { it.text.toString() }.joinToString(",")
-            viewModel.getQuery(tags)
+            viewModel.updateIngredients(tags)
         }
     }
 
@@ -78,6 +104,18 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
         binding.chipGroup.addView(chip)
         chip.setOnCloseIconClickListener {
             binding.chipGroup.removeView(chip)
+        }
+    }
+
+    private fun handleProgressBar(isLoading: Boolean){
+        if (isLoading) {
+            binding.loadingProgressBar.visibility = View.VISIBLE
+            adapter.differ.submitList(emptyList())
+            binding.rvRecipeByIngredients.visibility = View.INVISIBLE
+            binding.tvErrorMsg.visibility = View.INVISIBLE
+            binding.btnTryAgain.visibility = View.INVISIBLE
+        } else {
+            binding.loadingProgressBar.visibility = View.INVISIBLE
         }
     }
 
