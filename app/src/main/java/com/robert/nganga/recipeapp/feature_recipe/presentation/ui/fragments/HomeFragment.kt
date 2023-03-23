@@ -90,6 +90,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun displayData(response: Resource<List<Recipe>>) {
+        binding.rvRecipe.visibility = View.VISIBLE
         response.data?.let { recipes ->
             if(recipes.isNotEmpty()){
                 recipeAdapter.differ.submitList(recipes)
@@ -98,6 +99,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun showErrorMessage(message: String){
+        binding.rvRecipe.visibility = View.INVISIBLE
         binding.tvError.text = message
         binding.tvError.visibility = View.VISIBLE
         binding.btnRetry.visibility = View.VISIBLE
