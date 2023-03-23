@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.robert.nganga.recipeapp.R
+import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.databinding.FragmentRecipeBinding
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.Recipe
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.PagerAdapter
@@ -63,6 +64,31 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         setupViewPager()
 
         binding.toolbar.inflateMenu(R.menu.top_app_bar)
+        setupListeners()
+
+        viewModel.recipe.observe(viewLifecycleOwner) { response ->
+            when(response.status){
+                Resource.Status.SUCCESS -> {
+                    response.data?.let {
+                        binding.bindRecipeData(it)
+                        this.recipe = it
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    response.message?.let {
+                        Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT)
+                            .setAnchorView(binding.extendedFab)
+                            .show()
+                    }
+                }
+                Resource.Status.LOADING -> {
+
+                }
+            }
+        }
+    }
+
+    private fun setupListeners() {
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.action_favorite -> {
@@ -77,13 +103,6 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         binding.extendedFab.setOnClickListener {
             recipe?.sourceUrl?.let { recipeUrl ->
                 openWebPage(recipeUrl)
-            }
-        }
-
-        viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
-            recipe.data?.let {
-                binding.bindRecipeData(it)
-                this.recipe = it
             }
         }
 
