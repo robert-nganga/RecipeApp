@@ -13,7 +13,7 @@ interface RecipeApi {
     suspend fun getRandomRecipes(
         @Query("number") number: Int = 20,
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
-        @Query("tags") tags: String = "bbq"
+        @Query("tags") tags: String = ""
     ): RecipeResponseDto
 
     @GET("{id}/information")
