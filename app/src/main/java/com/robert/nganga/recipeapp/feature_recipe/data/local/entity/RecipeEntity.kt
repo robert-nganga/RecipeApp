@@ -33,7 +33,7 @@ data class RecipeEntity(
     val vegetarian: Boolean,
     val tag: String?,
     val timeStamp: String?,
-    val isFavorite: Boolean,
+    val isFavorite: Boolean
 ){
     fun toRecipe() = Recipe(
         aggregateLikes = aggregateLikes,
