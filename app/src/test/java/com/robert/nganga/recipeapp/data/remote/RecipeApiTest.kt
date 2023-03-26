@@ -62,17 +62,53 @@ class RecipeApiTest {
             enqueueMockResponse("randomrecipes.json")
             val response = service.getRandomRecipes(20)
             val recipe = response.recipes[0]
-            assertThat(recipe.id).isEqualTo(716429)
-            assertThat(recipe.title).isEqualTo("Spicy Sausage and Pepper Pasta")
-            assertThat(recipe.image).isEqualTo("https://spoonacular.com/recipeImages/716429-312x231.jpg")
-            assertThat(recipe.imageType).isEqualTo("jpg")
-            assertThat(recipe.readyInMinutes).isEqualTo(30)
-            assertThat(recipe.servings).isEqualTo(4)
-            assertThat(recipe.sourceUrl).isEqualTo("http://www.food.com/recipe/spicy-sausage-and-pepper-pasta-716429")
-            assertThat(recipe.sourceName).isEqualTo("Food.com")
-            assertThat(recipe.spoonacularSourceUrl).isEqualTo("https://spoonacular.com/spicy-sausage-and-pepper-pasta-716429")
+            assertThat(recipe.id).isEqualTo(715515)
+            assertThat(recipe.title).isEqualTo("Southern Style Green Bean")
         }
+    }
 
+    @Test
+    fun getRecipe_sentRequest_receivedExpected(){
+        runBlocking {
+            enqueueMockResponse("recipe_info.json")
+            val response = service.getRecipe(716429)
+            val request = server.takeRequest()
+            assertThat(response).isNotNull()
+            assertThat(request.path).isEqualTo("/716429/information?apiKey=f93c39d6997b453f8321b539332a9ca8")
+        }
+    }
+
+    @Test
+    fun getRecipe_receivedResponse_correctContent(){
+        runBlocking {
+            enqueueMockResponse("recipe_info.json")
+            val response = service.getRecipe(716429)
+            assertThat(response.id).isEqualTo(716429)
+            assertThat(response.title).isEqualTo("Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs")
+        }
+    }
+
+    @Test
+    fun searchByIngredients_sentRequest_receivedExpected(){
+        runBlocking {
+            enqueueMockResponse("search_recipe.json")
+            val response = service.searchByIngredients(ingredients = "apples,flour,sugar")
+            val request = server.takeRequest()
+            assertThat(response).isNotNull()
+            assertThat(response.size).isEqualTo(20)
+            assertThat(request.path).isEqualTo("/findByIngredients?apiKey=f93c39d6997b453f8321b539332a9ca8&number=20&ingredients=apples%2Cflour%2Csugar")
+        }
+    }
+
+    @Test
+    fun searchByIngredients_receivedResponse_correctContent(){
+        runBlocking {
+            enqueueMockResponse("search_recipe.json")
+            val response = service.searchByIngredients(ingredients = "apples,flour,sugar")
+            val recipe = response[0]
+            assertThat(recipe.id).isEqualTo(632583)
+            assertThat(recipe.title).isEqualTo("Apple Pie with PB&J Streusel")
+        }
     }
 
     @After

@@ -30,8 +30,9 @@ interface RecipeApi {
 
     @GET("findByIngredients")
     suspend fun searchByIngredients(
-        @Query("ingredients") ingredients: String,
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
+        @Query("number") number: Int = 20,
+        @Query("ingredients") ingredients: String,
     ): List<RecipeByIngredientsDto>
 
 
