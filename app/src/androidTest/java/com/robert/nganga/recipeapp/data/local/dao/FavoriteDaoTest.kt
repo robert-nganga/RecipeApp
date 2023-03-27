@@ -31,6 +31,7 @@ class FavoriteDaoTest {
 
     private lateinit var database: RecipeDatabase
     private lateinit var favoriteDao: FavoriteDao
+    private lateinit var recipeEntityDao: RecipeEntityDao
     private lateinit var recipeEntity: RecipeEntity
 
     @Before
@@ -40,6 +41,7 @@ class FavoriteDaoTest {
             RecipeDatabase::class.java
         ).addTypeConverter(Converters(GsonParser(Gson()))).allowMainThreadQueries().build()
         favoriteDao = database.favoriteDao()
+        recipeEntityDao = database.recipeDao()
         recipeEntity = RecipeEntity(
             aggregateLikes = 1,
             analyzedInstructions = listOf(AnalyzedInstruction(name = "name1", steps = listOf())),
@@ -64,8 +66,11 @@ class FavoriteDaoTest {
             vegetarian = true,
             tag = "tag1",
             timeStamp = "timeStamp1",
-            isFavorite = true
+            isFavorite = false
         )
+        runBlocking {
+            recipeEntityDao.insertRecipe(recipeEntity)
+        }
     }
 
     @After
@@ -75,24 +80,27 @@ class FavoriteDaoTest {
 
     @Test
     fun addFavorite() = runBlocking {
-        favoriteDao.addFavorite(recipeEntity)
+        val new = recipeEntity.copy(isFavorite = true)
+        favoriteDao.addFavorite(new)
         val favorite = favoriteDao.getFavoriteById(1).asLiveData().getOrAwaitValue()
-        assertThat(favorite).isEqualTo(recipeEntity)
+        assertThat(favorite[0]).isEqualTo(new)
     }
 
     @Test
     fun getAllFavorites() = runBlocking {
-        val recipes = listOf( recipeEntity, recipeEntity.copy(id = 2))
-        favoriteDao.addFavorite(recipeEntity)
-        favoriteDao.addFavorite(recipeEntity.copy(id = 2))
+        val new = recipeEntity.copy(isFavorite = true)
+        favoriteDao.addFavorite(new)
         val favorites = favoriteDao.getAllFavorites().asLiveData().getOrAwaitValue()
-        assertThat(favorites).isEqualTo(recipes)
+        assertThat(favorites).contains(new)
     }
 
     @Test
     fun removeFavorite() = runBlocking {
-        favoriteDao.addFavorite(recipeEntity)
-        favoriteDao.removeFavorite(recipeEntity)
+        val new = recipeEntity.copy(isFavorite = true)
+        favoriteDao.addFavorite(new)
+        val added = favoriteDao.getFavoriteById(1).asLiveData().getOrAwaitValue()
+        assertThat(added[0]).isEqualTo(new)
+        favoriteDao.removeFavorite(new.copy(isFavorite = false))
         val favorites = favoriteDao.getAllFavorites().asLiveData().getOrAwaitValue()
         assertThat(favorites).isEmpty()
     }
