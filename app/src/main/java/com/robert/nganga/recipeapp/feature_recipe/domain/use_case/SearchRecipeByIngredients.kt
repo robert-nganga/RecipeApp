@@ -13,15 +13,5 @@ import javax.inject.Inject
 class SearchRecipeByIngredients@Inject constructor(
         private val repository: SearchByIngredientsRepository
 ) {
-    operator fun invoke(ingredients: String) :Flow<Resource<List<RecipeByIngredients>>> = flow{
-        try {
-            emit(Resource.loading())
-            val response = repository.searchByIngredients(ingredients)
-            emit(Resource.success(response))
-        } catch (e: HttpException) {
-            emit(Resource.error(e.localizedMessage ?: "Unknown error"))
-        } catch (e: IOException) {
-            emit(Resource.error("Network error has occurred"))
-        }
-    }
+    suspend operator fun invoke(ingredients: String) = repository.searchByIngredients(ingredients)
 }

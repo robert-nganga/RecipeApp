@@ -49,7 +49,7 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
         setButtonListeners()
 
         binding.btnTryAgain.setOnClickListener {
-            viewModel.updateIngredients(viewModel.query.value.toString())
+            viewModel.getSearchResults(viewModel.query.value.toString())
         }
         viewModel.result.observe(viewLifecycleOwner) { response->
             when(response.status){
@@ -94,7 +94,7 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
 
         binding.floatingActionButton.setOnClickListener {
             val tags = binding.chipGroup.children.map { it as Chip }.map { it.text.toString() }.joinToString(",")
-            viewModel.updateIngredients(tags)
+            viewModel.getSearchResults(tags)
         }
     }
 
