@@ -1,8 +1,7 @@
-package com.robert.nganga.recipeapp.data.remote
+package com.robert.nganga.recipeapp.feature_recipe.data.remote
 
 import com.google.common.base.Charsets
 import com.google.common.truth.Truth.assertThat
-import com.robert.nganga.recipeapp.feature_recipe.data.remote.RecipeApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

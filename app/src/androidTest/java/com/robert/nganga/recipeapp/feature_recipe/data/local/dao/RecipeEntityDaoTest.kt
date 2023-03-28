@@ -1,4 +1,4 @@
-package com.robert.nganga.recipeapp.data.local.dao
+package com.robert.nganga.recipeapp.feature_recipe.data.local.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.asLiveData
@@ -9,8 +9,6 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.robert.nganga.recipeapp.feature_recipe.data.local.Converters
 import com.robert.nganga.recipeapp.feature_recipe.data.local.RecipeDatabase
-import com.robert.nganga.recipeapp.feature_recipe.data.local.dao.FavoriteDao
-import com.robert.nganga.recipeapp.feature_recipe.data.local.dao.RecipeEntityDao
 import com.robert.nganga.recipeapp.feature_recipe.data.local.entity.RecipeEntity
 import com.robert.nganga.recipeapp.feature_recipe.data.util.GsonParser
 import com.robert.nganga.recipeapp.feature_recipe.domain.model.AnalyzedInstruction
@@ -24,13 +22,12 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class FavoriteDaoTest {
+class RecipeEntityDaoTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var database: RecipeDatabase
-    private lateinit var favoriteDao: FavoriteDao
     private lateinit var recipeEntityDao: RecipeEntityDao
     private lateinit var recipeEntity: RecipeEntity
 
@@ -40,7 +37,6 @@ class FavoriteDaoTest {
             ApplicationProvider.getApplicationContext(),
             RecipeDatabase::class.java
         ).addTypeConverter(Converters(GsonParser(Gson()))).allowMainThreadQueries().build()
-        favoriteDao = database.favoriteDao()
         recipeEntityDao = database.recipeDao()
         recipeEntity = RecipeEntity(
             aggregateLikes = 1,
@@ -68,9 +64,6 @@ class FavoriteDaoTest {
             timeStamp = "timeStamp1",
             isFavorite = false
         )
-        runBlocking {
-            recipeEntityDao.insertRecipe(recipeEntity)
-        }
     }
 
     @After
@@ -79,29 +72,36 @@ class FavoriteDaoTest {
     }
 
     @Test
-    fun addFavorite() = runBlocking {
-        val new = recipeEntity.copy(isFavorite = true)
-        favoriteDao.addFavorite(new)
-        val favorite = favoriteDao.getFavoriteById(1).asLiveData().getOrAwaitValue()
-        assertThat(favorite[0]).isEqualTo(new)
+    fun insertRecipes() = runBlocking {
+        val recipeList = listOf(recipeEntity)
+        recipeEntityDao.insertRecipes(recipeList)
+        val recipes = recipeEntityDao.getRecipes("tag1").asLiveData().getOrAwaitValue()
+        assertThat(recipes).isEqualTo(recipeList)
     }
 
     @Test
-    fun getAllFavorites() = runBlocking {
-        val new = recipeEntity.copy(isFavorite = true)
-        favoriteDao.addFavorite(new)
-        val favorites = favoriteDao.getAllFavorites().asLiveData().getOrAwaitValue()
-        assertThat(favorites).contains(new)
+    fun insertRecipe() = runBlocking {
+        val newEntity = recipeEntity.copy(id = 2)
+        recipeEntityDao.insertRecipe(newEntity)
+        val recipes = recipeEntityDao.getRecipe(2).asLiveData().getOrAwaitValue()
+        assertThat(recipes).contains(newEntity)
     }
 
     @Test
-    fun removeFavorite() = runBlocking {
-        val new = recipeEntity.copy(isFavorite = true)
-        favoriteDao.addFavorite(new)
-        val added = favoriteDao.getFavoriteById(1).asLiveData().getOrAwaitValue()
-        assertThat(added[0]).isEqualTo(new)
-        favoriteDao.removeFavorite(new.copy(isFavorite = false))
-        val favorites = favoriteDao.getAllFavorites().asLiveData().getOrAwaitValue()
-        assertThat(favorites).isEmpty()
+    fun deleteRecipes() = runBlocking {
+        val recipeList = listOf(recipeEntity.copy(id = 3, tag = "tag"), recipeEntity.copy(id = 4, tag = "tag"))
+        recipeEntityDao.insertRecipes(recipeList)
+        recipeEntityDao.deleteRecipes("tag")
+        val recipes = recipeEntityDao.getRecipes("tag").asLiveData().getOrAwaitValue()
+        assertThat(recipes).isEmpty()
     }
+
+    @Test
+    fun deleteRecipe() = runBlocking {
+        recipeEntityDao.insertRecipe(recipeEntity.copy(id = 5))
+        recipeEntityDao.deleteRecipe(5)
+        val recipes = recipeEntityDao.getRecipe(5).asLiveData().getOrAwaitValue()
+        assertThat(recipes).isEmpty()
+    }
+
 }
