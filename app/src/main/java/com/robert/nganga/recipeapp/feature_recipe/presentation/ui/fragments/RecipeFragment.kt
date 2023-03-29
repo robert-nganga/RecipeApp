@@ -58,7 +58,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         favoriteViewModel = (activity as MainActivity).favoriteViewModel
-        viewModel.updateId(args.id)
+        viewModel.getRecipe(args.id)
         viewPager2 = binding.viewPager
         tabLayout = binding.tabLayout
         setupViewPager()
@@ -118,7 +118,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
 
     private fun setupListeners() {
         binding.btnRetryRecipe.setOnClickListener {
-            viewModel.updateId(args.id)
+            viewModel.getRecipe(args.id)
         }
 
         binding.toolbar.setOnMenuItemClickListener {
