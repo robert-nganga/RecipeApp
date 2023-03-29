@@ -1,6 +1,5 @@
 package com.robert.nganga.recipeapp.feature_recipe.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRandomRecipes
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRecipeById
@@ -12,7 +11,7 @@ import javax.inject.Inject
 class RecipeViewModel@Inject constructor(
     private val getRandomRecipes: GetRandomRecipes,
     private val getRecipeById: GetRecipeById,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var _tag = savedStateHandle.getLiveData(CURRENT_TAG, DEFAULT_TAG)
