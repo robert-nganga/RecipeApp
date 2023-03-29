@@ -54,4 +54,15 @@ class RecipeViewModelTest{
         assertThat(recipe).isNotNull()
         assertThat(recipe?.id).isEqualTo(1)
     }
+
+    @Test
+    fun `retry() updates the recipes`(){
+        viewModel.retry("myTag")
+        val recipes = viewModel.recipes.getOrAwaitValueTest().data
+        assertThat(recipes).isNotNull()
+        val tag = viewModel.tag.value
+        assertThat(tag).isEqualTo("myTag")
+        assertThat(recipes?.size).isEqualTo(2)
+    }
+
 }
