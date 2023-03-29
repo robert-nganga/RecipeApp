@@ -23,8 +23,11 @@ class SearchByIngredientsViewModel@Inject constructor(
 
     fun getSearchResults(query: String){
         _query.value = query
+        _result.postValue(Resource.loading())
         viewModelScope.launch {
-            _result.value = searchRecipeByIngredients(query).asLiveData().value
+            searchRecipeByIngredients(query).collect{ response->
+                _result.postValue(response)
+            }
         }
     }
 
