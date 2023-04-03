@@ -63,7 +63,6 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         tabLayout = binding.tabLayout
         setupViewPager()
 
-        binding.toolbar.inflateMenu(R.menu.top_app_bar)
         setupListeners()
 
         viewModel.recipe.observe(viewLifecycleOwner) { response ->
@@ -117,19 +116,14 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     }
 
     private fun setupListeners() {
-        binding.btnRetryRecipe.setOnClickListener {
-            viewModel.getRecipe(args.id)
+        binding.imgIsFavorite.setOnClickListener {
+            recipe?.let { recipe->
+                handleFavorite(recipe)
+            }
         }
 
-        binding.toolbar.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.action_favorite -> {
-                    recipe?.let { recipe->
-                        handleFavorite(recipe)
-                    }
-                }
-            }
-            true
+        binding.btnRetryRecipe.setOnClickListener {
+            viewModel.getRecipe(args.id)
         }
 
         binding.extendedFab.setOnClickListener {
@@ -215,7 +209,11 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
         val time = "${recipe.readyInMinutes} mins"
         val servings = "${recipe.servings} servings"
         this.apply {
-            toolbar.menu.findItem(R.id.action_favorite).icon = if (recipe.isFavorite) icFavoriteFilledImage else icFavoriteBorderImage
+            if (recipe.isFavorite){
+                imgIsFavorite.setImageDrawable(icFavoriteFilledImage)
+            }else{
+                imgIsFavorite.setImageDrawable(icFavoriteBorderImage)
+            }
             extendedFab.text = recipe.sourceName
             tvRecipeTitle.text = recipe.title
             tvRecipeTime.text = time

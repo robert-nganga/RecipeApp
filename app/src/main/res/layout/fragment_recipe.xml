@@ -31,6 +31,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:navigationIconTint="@color/white"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
                 app:layout_collapseMode="pin" />
 
@@ -70,19 +71,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintEnd_toStartOf="@+id/imgShareRecipe"
+                app:layout_constraintEnd_toStartOf="@+id/imgIsFavorite"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Chocolate Almond Bark" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/imgShareRecipe"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
+                android:background="@color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_outline_share_24" />
@@ -187,6 +188,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imgIsFavorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/transparent"
+                app:layout_constraintEnd_toStartOf="@+id/imgShareRecipe"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_outline_favorite_border_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

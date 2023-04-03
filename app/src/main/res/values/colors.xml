@@ -15,4 +15,5 @@
     <color name="green_200">#99ff99</color>
     <color name="green_300">#28ff66</color>
     <color name="green_500">#00cc00</color>
+    <color name="transparent">#00000000</color>
 </resources>
