@@ -95,6 +95,34 @@ class FakeFavoriteRepository: FavoriteRepository{
                 timeStamp = "timeStamp3"
             )
         )
+        recipes.add(
+            Recipe(
+                id = 4,
+                title = "Recipe 4",
+                image = "image4",
+                imageType = "imageType4",
+                summary = "summary4",
+                cuisines = emptyList(),
+                dishTypes = emptyList(),
+                diets = emptyList(),
+                instructions = "instructions4",
+                analyzedInstructions = emptyList(),
+                extendedIngredients = emptyList(),
+                vegetarian = true,
+                vegan = true,
+                glutenFree = true,
+                dairyFree = true,
+                aggregateLikes = 4,
+                sourceName = "sourceName4",
+                servings = 4,
+                sourceUrl = "sourceUrl4",
+                isFavorite = false,
+                cookingMinutes = 4,
+                readyInMinutes = 4,
+                tag = "myTag",
+                timeStamp = "timeStamp4"
+            )
+        )
     }
 
     override fun getFavoriteRecipes() = flow {
