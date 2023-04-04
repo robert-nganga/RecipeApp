@@ -36,7 +36,7 @@ class SummaryFragment: Fragment(R.layout.fragment_summary) {
                 val summary = regex.replace(recipe.summary, "")
                 binding.tvRecipeSummary.text = summary
 
-                val imageUrl = "$BASE_RECIPE_WIDGET_URL${recipe.id}/nutritionWidget.png?apiKey=${BuildConfig.API_KEY}"
+                val imageUrl = "$BASE_RECIPE_WIDGET_URL${recipe.id}/nutritionLabel.png?apiKey=${BuildConfig.API_KEY}"
                 Glide.with(requireContext())
                     .load(imageUrl)
                     .into(binding.imgSummary)

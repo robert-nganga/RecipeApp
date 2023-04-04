@@ -24,6 +24,7 @@ class ExploreFragment: Fragment(R.layout.fragment_explore) {
     private var _binding : FragmentExploreBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

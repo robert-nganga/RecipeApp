@@ -34,6 +34,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     private val binding get() = _binding!!
     private val args: RecipeFragmentArgs by navArgs()
 
+
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
 
