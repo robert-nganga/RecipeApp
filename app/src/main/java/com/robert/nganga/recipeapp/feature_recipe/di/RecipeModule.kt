@@ -10,10 +10,12 @@ import com.robert.nganga.recipeapp.feature_recipe.data.remote.RecipeApi.Companio
 import com.robert.nganga.recipeapp.feature_recipe.data.repository.FavoriteRepositoryImpl
 import com.robert.nganga.recipeapp.feature_recipe.data.repository.RecipeRepositoryImpl
 import com.robert.nganga.recipeapp.feature_recipe.data.repository.SearchByIngredientsRepositoryImpl
+import com.robert.nganga.recipeapp.feature_recipe.data.repository.SearchRepositoryImpl
 import com.robert.nganga.recipeapp.feature_recipe.data.util.GsonParser
 import com.robert.nganga.recipeapp.feature_recipe.domain.repository.FavoriteRepository
 import com.robert.nganga.recipeapp.feature_recipe.domain.repository.RecipeRepository
 import com.robert.nganga.recipeapp.feature_recipe.domain.repository.SearchByIngredientsRepository
+import com.robert.nganga.recipeapp.feature_recipe.domain.repository.SearchRepository
 import com.robert.nganga.recipeapp.feature_recipe.domain.use_case.GetRandomRecipes
 import dagger.Module
 import dagger.Provides
@@ -60,6 +62,14 @@ object RecipeModule {
         api: RecipeApi
     ): SearchByIngredientsRepository {
         return SearchByIngredientsRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(
+        api: RecipeApi
+    ): SearchRepository {
+        return SearchRepositoryImpl(api)
     }
 
     @Provides
