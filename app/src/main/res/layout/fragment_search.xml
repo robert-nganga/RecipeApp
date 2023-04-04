@@ -12,7 +12,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
-        android:hint="Search recipes"
         app:startIconDrawable="@drawable/ic_baseline_search_24"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +20,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tvSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:hint="Search recipes"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
