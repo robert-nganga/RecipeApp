@@ -21,6 +21,7 @@ class SearchByIngredientsViewModel@Inject constructor(
 
 
 
+
     fun getSearchResults(query: String){
         _query.value = query
         _result.postValue(Resource.loading())
