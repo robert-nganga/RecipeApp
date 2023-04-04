@@ -4,6 +4,7 @@ import com.robert.nganga.recipeapp.BuildConfig
 import com.robert.nganga.recipeapp.feature_recipe.data.remote.dto.RecipeByIngredientsDto
 import com.robert.nganga.recipeapp.feature_recipe.data.remote.dto.RecipeDto
 import com.robert.nganga.recipeapp.feature_recipe.data.remote.dto.RecipeResponseDto
+import com.robert.nganga.recipeapp.feature_recipe.data.remote.dto.SearchResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,11 +23,11 @@ interface RecipeApi {
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
     ): RecipeDto
 
-//    @GET("complexSearch")
-//    suspend fun searchRecipes(
-//        @Query("query") query: String,
-//        @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
-//    ): SearchResponse
+    @GET("complexSearch")
+    suspend fun searchRecipes(
+        @Query("query") query: String,
+        @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
+    ): SearchResponseDto
 
     @GET("findByIngredients")
     suspend fun searchByIngredients(
