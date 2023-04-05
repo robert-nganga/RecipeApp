@@ -54,6 +54,10 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         setupChipGroup()
 
+        binding.searchCardView.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+
         binding.btnRetry.setOnClickListener {
             val selectedChip = binding.chipGroup.checkedChipId
             val chipText = binding.chipGroup.findViewById<Chip>(selectedChip).text
