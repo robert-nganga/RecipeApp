@@ -21,10 +21,8 @@ class SearchViewModel@Inject constructor(
     val searchResults: LiveData<Resource<List<SearchResult>>> get() = _searchResults
 
 
-    private var currentQuery = ""
+
     fun getSearchResults(query: String){
-        if (query == currentQuery) return
-        currentQuery = query
         _searchResults.postValue(Resource.loading())
         viewModelScope.launch {
             searchRecipe(query).collect{ response->

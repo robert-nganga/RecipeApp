@@ -39,6 +39,9 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         viewModel = (activity as MainActivity).searchViewModel
         setupRecyclerView()
 
+        //Set focus on search bar
+        binding.tvSearch.requestFocus()
+
         binding.button.setOnClickListener {
             val query = binding.tvSearch.text.toString()
             viewModel.getSearchResults(query)

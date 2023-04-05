@@ -89,6 +89,7 @@
                 android:paddingStart="0dp"
                 android:gravity="start"
                 android:text="Explore recipes"
+                android:fontFamily="@font/courgette_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/grey_800"
                 android:textStyle="bold"
