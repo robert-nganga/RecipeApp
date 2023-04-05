@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:contentDescription="Apply ingredients"
         android:text="Apply"
         android:textColor="@color/white"
@@ -20,142 +20,139 @@
         app:iconTint="@color/white"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecipeByIngredients"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="7dp"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+            app:spanCount="2"
+            tools:listitem="@layout/recipe_by_ingredient_item" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecipeByIngredients"
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintVertical_bias="0.29000002" />
+
+        <TextView
+            android:id="@+id/tvErrorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintVertical_bias="0.39"
+            tools:text="Error" />
+
+        <Button
+            android:id="@+id/btnTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
+            app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingStart="0dp"
+            android:gravity="start"
+            android:text="Enter your fridge contents"
+            android:textSize="26sp"
+            android:fontFamily="@font/courgette_regular"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/grey_800"
+            android:textStyle="bold"
+            android:letterSpacing="0.07"
+            style="@style/Widget.Material3.Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Ingredient"
+            app:layout_constraintEnd_toStartOf="@+id/btnApply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etIngredient"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="7dp"
-                android:layout_marginBottom="80dp"
-                android:layout_marginTop="10dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView"
-                app:spanCount="2"
-                tools:listitem="@layout/recipe_by_ingredient_item" />
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <ProgressBar
-                android:id="@+id/loadingProgressBar"
-                style="?android:attr/progressBarStyle"
+        <Button
+            android:id="@+id/btnApply"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:elevation="5dp"
+            android:text="Add"
+            android:textColor="@color/green_500"
+            app:backgroundTint="@color/white"
+            app:cornerRadius="10dp"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconTint="@color/green_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:shapeAppearanceOverlay="@style/CustomChipStyle"
+            app:strokeColor="@color/green_500" />
+
+        <HorizontalScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintVertical_bias="0.29000002" />
-
-            <TextView
-                android:id="@+id/tvErrorMsg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintVertical_bias="0.39"
-                tools:text="Error" />
-
-            <Button
-                android:id="@+id/btnTryAgain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Retry"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintEnd_toEndOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintStart_toStartOf="@+id/rvRecipeByIngredients"
-                app:layout_constraintTop_toTopOf="@+id/rvRecipeByIngredients" />
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="10dp"
-                android:paddingStart="0dp"
-                android:gravity="start"
-                android:text="Explore recipes"
-                android:fontFamily="@font/courgette_regular"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/grey_800"
-                android:textStyle="bold"
-                style="@style/Widget.Material3.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="Ingredient"
-                app:layout_constraintEnd_toStartOf="@+id/btnApply"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etIngredient"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnApply"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="65dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:elevation="5dp"
-                android:text="Add"
-                android:textColor="@color/green_500"
-                app:backgroundTint="@color/white"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/ic_baseline_add_24"
-                app:iconTint="@color/green_500"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-                app:shapeAppearanceOverlay="@style/CustomChipStyle"
-                app:strokeColor="@color/green_500" />
-
-            <HorizontalScrollView
-                android:id="@+id/scrollView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chipGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:singleLine="true"/>
-            </HorizontalScrollView>
+                app:singleLine="true"/>
+        </HorizontalScrollView>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -186,6 +186,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
             viewPager.visibility = View.INVISIBLE
             imageView4.visibility = View.INVISIBLE
             imageView7.visibility = View.INVISIBLE
+            imgIsFavorite.visibility = View.INVISIBLE
         }
     }
 
@@ -201,6 +202,7 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
             imgShareRecipe.visibility = View.VISIBLE
             tabLayout.visibility = View.VISIBLE
             viewPager.visibility = View.VISIBLE
+            imgIsFavorite.visibility = View.VISIBLE
         }
     }
 

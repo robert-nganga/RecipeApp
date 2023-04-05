@@ -10,10 +10,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:letterSpacing="0.07"
         android:text="Easy to cook recipes"
-        android:textSize="32sp"
+        android:textSize="34sp"
         android:fontFamily="@font/courgette_regular"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/green_500"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +80,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bannerCardView"

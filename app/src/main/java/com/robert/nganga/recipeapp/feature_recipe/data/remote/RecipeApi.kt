@@ -26,6 +26,7 @@ interface RecipeApi {
     @GET("complexSearch")
     suspend fun searchRecipes(
         @Query("query") query: String,
+        @Query("number") number: Int = 20,
         @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
     ): SearchResponseDto
 
