@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -117,6 +118,11 @@ class RecipeFragment: Fragment(R.layout.fragment_recipe){
     }
 
     private fun setupListeners() {
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.imgIsFavorite.setOnClickListener {
             recipe?.let { recipe->
                 handleFavorite(recipe)

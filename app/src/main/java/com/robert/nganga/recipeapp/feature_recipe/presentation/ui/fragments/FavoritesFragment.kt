@@ -42,6 +42,10 @@ class FavoritesFragment: Fragment(R.layout.fragment_favorite) {
             showConfirmDialog()
         }
 
+        binding.favoriteToolBar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
         favoriteAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putInt("id", it.id)

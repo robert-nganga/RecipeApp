@@ -47,6 +47,10 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
             viewModel.getSearchResults(query)
         }
 
+        binding.imgBackArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnRetrySearch.setOnClickListener {
             val query = binding.tvSearch.text.toString()
             viewModel.getSearchResults(query)
