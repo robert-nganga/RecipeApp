@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.robert.nganga.recipeapp.R
 import com.robert.nganga.recipeapp.core.util.Resource
 import com.robert.nganga.recipeapp.databinding.FragmentSearchBinding
+import com.robert.nganga.recipeapp.feature_recipe.domain.model.SearchResult
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.SearchAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.adapter.SearchByIngredientsAdapter
 import com.robert.nganga.recipeapp.feature_recipe.presentation.ui.MainActivity
@@ -42,21 +44,61 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
             viewModel.getSearchResults(query)
         }
 
+        binding.btnRetrySearch.setOnClickListener {
+            val query = binding.tvSearch.text.toString()
+            viewModel.getSearchResults(query)
+        }
+
+        adapter.setOnItemClickListener { searchResult ->
+            val bundle = Bundle().apply {
+                putInt("id", searchResult.id)
+            }
+            findNavController().navigate(R.id.action_searchFragment_to_recipeFragment, bundle)
+        }
+
         viewModel.searchResults.observe(viewLifecycleOwner) { response ->
             when (response.status) {
                 Resource.Status.SUCCESS -> {
+                    toggleProgressBar(false)
+                    binding.rvSearch.visibility = View.VISIBLE
                     response.data?.let { searchResult ->
                         adapter.differ.submitList(searchResult)
                     }
                 }
                 Resource.Status.LOADING  -> {
+                    toggleProgressBar(true)
                 }
                 Resource.Status.ERROR  -> {
-
+                    toggleProgressBar(false)
+                    showErrorMessage(response)
                 }
             }
         }
 
+    }
+
+    private fun toggleProgressBar(isLoading: Boolean) {
+        binding.apply {
+            if (isLoading) {
+                searchProgressBar.visibility = View.VISIBLE
+                tvErrorSearch.visibility = View.INVISIBLE
+                btnRetrySearch.visibility = View.INVISIBLE
+                rvSearch.visibility = View.INVISIBLE
+            } else {
+                searchProgressBar.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+
+    private fun showErrorMessage(response: Resource<List<SearchResult>>) {
+        response.message?.let { message ->
+            binding.apply {
+                tvErrorSearch.text = message
+                tvErrorSearch.visibility = View.VISIBLE
+                btnRetrySearch.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setupRecyclerView() {
