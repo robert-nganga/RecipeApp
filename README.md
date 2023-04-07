@@ -8,6 +8,11 @@ An MVVM clean architecture app that displays various food recipes from the [Spoo
    * Save your favorite recipes to your personal collection.
    * View your favorite recipes offline.
    * Share recipes with friends and family.
+## Architecture
+This app follows the Clean MVVM architecture, which separates the app into three layers:
+  * Presentation layer: Contains the UI, ViewModels, and Navigation components.
+  * Domain layer: Contains the business logic and UseCases.
+  * Data layer: Contains the repositories, data sources, and the Room database.
 
 ## Setup
 To get started with the app, you'll need to obtain an API key from [Spoonacular API](https://spoonacular.com/food-api)
