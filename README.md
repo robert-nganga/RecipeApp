@@ -14,6 +14,9 @@ This app follows the Clean MVVM architecture, which separates the app into three
   * Domain layer: Contains the business logic and UseCases.
   * Data layer: Contains the repositories, data sources, and the Room database.
 
+## Screenshots
+![](apk/combine_images1.png)
+
 ## Setup
 To get started with the app, you'll need to obtain an API key from [Spoonacular API](https://spoonacular.com/food-api)
    1. Clone the repository or download the ZIP file.
