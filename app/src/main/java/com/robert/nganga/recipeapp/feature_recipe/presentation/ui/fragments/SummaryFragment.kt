@@ -37,9 +37,9 @@ class SummaryFragment: Fragment(R.layout.fragment_summary) {
                 binding.tvRecipeSummary.text = summary
 
                 val imageUrl = "$BASE_RECIPE_WIDGET_URL${recipe.id}/nutritionLabel.png?apiKey=${BuildConfig.API_KEY}"
-                Glide.with(requireContext())
-                    .load(imageUrl)
-                    .into(binding.imgSummary)
+//                Glide.with(requireContext())
+//                    .load(imageUrl)
+//                    .into(binding.imgSummary)
             }
         }
     }

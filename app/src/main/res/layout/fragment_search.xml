@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imgBackArrow"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
@@ -20,9 +20,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Search Recipes"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:letterSpacing="0.05"
         app:layout_constraintStart_toEndOf="@+id/imgBackArrow"

@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/green_500"
+            app:titleTextColor="@color/white"
             app:navigationIconTint="@color/white"
             app:title="Favorites"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
