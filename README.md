@@ -54,3 +54,6 @@ The app is built using popular libraries including:
    * [Flows](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) A library that provides a way to represent and manage streams of data in Kotlin.
    * [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) A lightweight concurrency framework for Kotlin. 
    * [Truth](https://truth.dev/) A testing library for Java and Kotlin that provides fluent assertion APIs for unit tests.
+   
+## Contributions
+We welcome contributions to this project. If you have any suggestions or want to report a bug, please open an issue or submit a pull request.
