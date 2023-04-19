@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="elevation">4dp</item>
+    </style>
+
+    <style name="TitleStyle">
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:fontFamily">@font/courgette_regular</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+        <item name="android:textColor">@color/grey_800</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.07</item>
     </style>
 
 </resources>
