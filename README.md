@@ -16,7 +16,7 @@ This app follows the Clean MVVM architecture, which separates the app into three
 
 ## Screenshots
 ![](screenshots/combine_images.jpg)
-![](screenshots/combine_images%(1).jpg)
+![](screenshots/combine_images1.jpg)
 
 ## Setup
 To get started with the app, you'll need to obtain an API key from [Spoonacular API](https://spoonacular.com/food-api)
